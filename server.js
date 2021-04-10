@@ -10,7 +10,7 @@ const superagent=require('superagent');
 const pg =require('pg');
 const methodOverride=require('method-override');
 
-
+const client = new pg.Client(process.env.DATABASE_URL)
 const app=express();
 const PORT =process.env.PORT;
 
@@ -90,7 +90,19 @@ function renderReview(request, response){
 }
 function saveToDB(request, response)
 {
+    let sql = 'INSERT INTO reviews (user_name , comment ,flight_rate)Values($1,$2,$3) RETURNING *'
+    
+    let values = [request.body.userName , request.body.userReview ,request.body.rate]
+                               
+    client.query(sql,values)
+    console.log( 'valuessssss',values );
     console.log(request.body);
 }
 
-app.listen(PORT, () => {console.log(`Listening to Port ${PORT}`);});
+
+
+client.connect(()=>{
+    app.listen(PORT, () => {console.log(`Listening to Port ${PORT}`);});
+})
+
+
