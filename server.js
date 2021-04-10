@@ -85,21 +85,33 @@ function getData(request,response){
  
 }
 function renderReview(request, response){
+    let data =request.body;
     console.log(request.body);
+    let SQL = `INSERT INTO flights_info (flight_num,airline,departure,arrival,flight_date,flight_status) VALUES($1,$2,$3,$4,$5,$6) RETURNING *`
+    let values=[data.flight_num, data.airline, data.departure, data.arrival, data.flight_date, data.flight_status];
+    let resDBPromis=client.query(SQL,values);
     response.render('./pages/review',{result : request.body} );
 }
 function saveToDB(request, response)
 {
-    let sql = 'INSERT INTO reviews (user_name , comment ,flight_rate)Values($1,$2,$3) RETURNING *'
-    
-    let values = [request.body.userName , request.body.userReview ,request.body.rate]
-                               
-    client.query(sql,values)
-    console.log( 'valuessssss',values );
-    console.log(request.body);
+    //improve the logic here<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
+    let SQL = 'select max(id) from flights_info';
+    client.query(SQL).then(result=>{
+        console.log('result', result);
+        let sql = 'INSERT INTO reviews (flight_id, user_name , comment ,flight_rate)Values($1,$2,$3,$4) RETURNING *'
+        let values = [result.rows[0].max,request.body.userName , request.body.userReview ,request.body.rate]
+        client.query(sql,values).then(result=>{
+            console.log('result', result.rows);
+            let flightDataID =result.rows[0].flight_id;
+            let sql = `SELECT flight_num,airline,departure,arrival,flight_date,flight_status FROM flights_info WHERE id=$1`
+            let values=[flightDataID];
+            client.query(sql,values).then(fData=>{
+                console.log('fData', fData.rows);
+                response.render('./pages/community',{result:result.rows,fData:fData.rows});
+            });
+        });
+    });
 }
-
-
 
 client.connect(()=>{
     app.listen(PORT, () => {console.log(`Listening to Port ${PORT}`);});
