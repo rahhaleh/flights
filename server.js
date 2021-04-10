@@ -1,5 +1,7 @@
 'use strict';
 
+let flightArray=[];
+
 require('dotenv').config();
 
 
@@ -20,7 +22,7 @@ app.use(express.static('./public'));
 app.use(methodOverride('_method'));
 
 app.get('/',renderHomePage)
-app.post('/search',getdata)
+app.post('/search',getData)
 
 
 function Flight(data){
@@ -33,10 +35,10 @@ this.flight=(data.flight.number)?data.flight.number:'no available flight number'
 }
 
 function renderHomePage(request,response){
-    response.render('pages/')
+    response.render('./')
 }
 
-function getdata(request,response){
+function getData(request,response){
     console.log(request.body);
     let departure;
     let arrival;
@@ -69,34 +71,16 @@ function getdata(request,response){
     }
     url=`${url}&limit=5`;
     console.log('last url////////////////////////////',url)
-    superagent.get(url).then(apireponse=>{
-      console.log(apireponse.body.data);
-    //   console.log(apireponse.body.data[0].departure);
+    superagent.get(url).then(apiResponse=>{
+      console.log(apiResponse.body.data);
+      flightArray= apiResponse.body.data.map(element=>{
+      return new Flight(element);
+      })
+      response.redirect('./pages/show',{ searchResults: flightArray });
   }).catch((err)=> {
     console.log(err);
   });
-   
-    
-//     let departure=handleIata(request.body.departure);
-//     let arrival=handleIata(request.body.arrival);
-// console.log('departure',departure);
-// console.log('arrival',arrival);
-  
-
-  
-  
+ 
 }
-// function handleIata(city){
-//     const iata=require('./data/iata.json');
-//     // let currentCities=[];
-//     iata.forEach(element => {
-//         if(city===element.city){
-//             return element.code;
-//         }
-//     });
-
-
-// }
-
 
 app.listen(PORT, () => {console.log(`Listening to Port ${PORT}`);});
