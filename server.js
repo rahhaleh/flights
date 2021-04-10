@@ -23,11 +23,6 @@ app.get('/',renderHomePage)
 app.post('/search',getdata)
 
 
-// function Cities(data){
-//     this.city=data.city;
-//     this.code=data.code;
-// }
-
 function Flight(data){
 this.flight_date=(data.flight_date)?data.flight_date:'no available flight date';
 this.flight_status=(data.flight_status)?data.flight_status:'no available flight status';
@@ -45,53 +40,41 @@ function getdata(request,response){
     console.log(request.body);
     let departure;
     let arrival;
+    
     const airlineName=request.body.airline;
-    const flightNumber=request.body.flightnumber;
+    const flightNumber=(request.body.flightnumber)?request.body.flightnumber:' ';
     const key=process.env.FLIGHT_KEY;
+    let url=`http://api.aviationstack.com/v1/flights?access_key=${key}&airline_name=${airlineName}`
 
     if(request.body.departure && request.body.arrival){
         console.log('inside if');
         const iata=require('./data/iata.json');
-        // let currentCities=[];
         iata.forEach(element => {
-            if(element.city===request.body.departure ){
+            if(element.city===request.body.departure ||element.state===request.body.departure ){
                 departure  =  element.code;
                 console.log('departure',departure);
             }
-            if(element.city===request.body.arrival){
+            if(element.city===request.body.arrival||element.state===request.body.arrival){
                 arrival  =  element.code;
                 console.log('arrival',arrival);
-              
             }
-        });
-        // iata.forEach(element => {
-          
-        // });
-      
-        let url=`http://api.aviationstack.com/v1/flights?access_key=${key}&dep_iata=${departure}&arr_iata=${arrival}&airline_name=${airlineName}&flight_number=${flightNumber}&limit=5`;
-     
-        console.log(url);
-        superagent.get(url).then(apireponse=>{
-          console.log(apireponse.body);
-          console.log(apireponse.body.data[0].departure);
-      }) .catch((err)=> {
-        console.log(err);
-      });
-    }else{
-        console.log('inside else');
-        let url=`http://api.aviationstack.com/v1/flights?access_key=${key}&airline_name=${airlineName}&flight_number=${flightNumber}`;
-        console.log('url',url)
-      superagent.get(url).then(apireponse=>{
-          console.log(apireponse.body);
-        //   console.log(apireponse.body.data[0].departure);
-      }).catch((err)=> {
-        console.log(err);
-      });
+        });      
+        url=`${url}&dep_iata=${departure}&arr_iata=${arrival}`;
+        console.log(url);       
     }
-   
-   
-  
-   
+    if(request.body.flightnumber){
+        console.log('inside second if');
+        url=`${url}&flight_number=${flightNumber}`;
+        console.log('url',url)
+    }
+    url=`${url}&limit=5`;
+    console.log('last url////////////////////////////',url)
+    superagent.get(url).then(apireponse=>{
+      console.log(apireponse.body.data);
+    //   console.log(apireponse.body.data[0].departure);
+  }).catch((err)=> {
+    console.log(err);
+  });
    
     
 //     let departure=handleIata(request.body.departure);
