@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <main>
+        
+        <section>
+            <% if(searchResults) { %>
+                <% searchResults.forEach(flight=>{ %>
+                    <div>
+                        <ul>
+                           <li>
+                            <%= flight.flight_date %>
+                            </li>
+                            <li>
+                                <%= flight.flight_status %>
+                            </li>
+                            <li>
+                                <%= flight.departure %>
+                            </li>
+                            <li>
+                                <%= flight.arrival %>
+                            </li>
+                            <li>
+                                <%= flight.airline %>
+                            </li>
+                            <li>
+                                <%= flight.flight %>
+                            </li>
+                        </ul>
+
+                    </div>
+                    <form action="/review" method="POST">
+                        <input type="hidden" value=" <%= flight.flight %>" name="flight_num" > 
+                        <input type="hidden" value=" <%= flight.airline %>" name="airline" > 
+                        <input type="hidden" value="<%= flight.departure %>" name="departure" > 
+                        <input type="hidden" value="<%= flight.arrival %>" name="arrival" > 
+                        <input type="hidden" value="<%= flight.flight_date %>" name="flight_date" > 
+                        <input type="hidden" value="<%= flight.flight_status %>" name="flight_status" > 
+                        <button type="submit">Add My Review</button>
+                    </form>
+                    <% }) %>
+                        <% } %>
+                    </section>
+    
+        
+    </main>
+</body>
+
+</html>
