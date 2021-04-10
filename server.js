@@ -21,15 +21,17 @@ app.set('view engine', 'ejs');
 app.use(express.static('./public'));
 app.use(methodOverride('_method'));
 
-app.get('/',renderHomePage)
-app.post('/search',getData)
+app.get('/',renderHomePage);
+app.post('/search',getData);
+app.post('/review', renderReview);
+app.post('/saveReview', saveToDB);
 
 
 function Flight(data){
 this.flight_date=(data.flight_date)?data.flight_date:'no available flight date';
 this.flight_status=(data.flight_status)?data.flight_status:'no available flight status';
-this.departure=(data.departure)?data.departure:'no available departure';
-this.arrival=(data.arrival)?data.arrival:'no available arrival';
+this.departure=(data.departure.airport)?data.departure.airport:'no available departure';
+this.arrival=(data.arrival.airport)?data.arrival.airport:'no available arrival';
 this.airline=(data.airline.name)?data.airline.name:'no available airline name';
 this.flight=(data.flight.number)?data.flight.number:'no available flight number';
 }
@@ -76,11 +78,19 @@ function getData(request,response){
       flightArray= apiResponse.body.data.map(element=>{
       return new Flight(element);
       })
-      response.redirect('./pages/show',{ searchResults: flightArray });
+      response.render('./pages/show',{ searchResults: flightArray });
   }).catch((err)=> {
     console.log(err);
   });
  
+}
+function renderReview(request, response){
+    console.log(request.body);
+    response.render('./pages/review',{result : request.body} );
+}
+function saveToDB(request, response)
+{
+    console.log(request.body);
 }
 
 app.listen(PORT, () => {console.log(`Listening to Port ${PORT}`);});
