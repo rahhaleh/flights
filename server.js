@@ -1,4 +1,4 @@
-'use strict';
+
 
 let flightArray=[];
 
@@ -24,7 +24,8 @@ app.use(methodOverride('_method'));
 app.get('/',renderHomePage);
 app.post('/search',getData);
 app.post('/review', renderReview);
-app.post('/saveReview', saveToDB);
+app.post('/community', saveToDB);
+app.get('/community', renderCommunity);
 
 
 function Flight(data){
@@ -41,7 +42,6 @@ function renderHomePage(request,response){
 }
 
 function getData(request,response){
-    console.log(request.body);
     let departure;
     let arrival;
     
@@ -64,12 +64,10 @@ function getData(request,response){
             }
         });      
         url=`${url}&dep_iata=${departure}&arr_iata=${arrival}`;
-        console.log(url);       
     }
     if(request.body.flightnumber){
         console.log('inside second if');
         url=`${url}&flight_number=${flightNumber}`;
-        console.log('url',url)
     }
     url=`${url}&limit=5`;
     console.log('last url////////////////////////////',url)
@@ -86,7 +84,6 @@ function getData(request,response){
 }
 function renderReview(request, response){
     let data =request.body;
-    console.log(request.body);
     let SQL = `INSERT INTO flights_info (flight_num,airline,departure,arrival,flight_date,flight_status) VALUES($1,$2,$3,$4,$5,$6) RETURNING *`
     let values=[data.flight_num, data.airline, data.departure, data.arrival, data.flight_date, data.flight_status];
     let resDBPromis=client.query(SQL,values);
@@ -94,24 +91,48 @@ function renderReview(request, response){
 }
 function saveToDB(request, response)
 {
-    //improve the logic here<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
     let SQL = 'select max(id) from flights_info';
     client.query(SQL).then(result=>{
-        console.log('result', result);
         let sql = 'INSERT INTO reviews (flight_id, user_name , comment ,flight_rate)Values($1,$2,$3,$4) RETURNING *'
         let values = [result.rows[0].max,request.body.userName , request.body.userReview ,request.body.rate]
         client.query(sql,values).then(result=>{
-            console.log('result', result.rows);
-            let flightDataID =result.rows[0].flight_id;
-            let sql = `SELECT flight_num,airline,departure,arrival,flight_date,flight_status FROM flights_info WHERE id=$1`
-            let values=[flightDataID];
-            client.query(sql,values).then(fData=>{
-                console.log('fData', fData.rows);
-                response.render('./pages/community',{result:result.rows,fData:fData.rows});
-            });
+            response.redirect('/community');
         });
     });
 }
+
+function renderCommunity(request,response){
+
+    console.log('in render community')
+
+    let SQL = `SELECT count(id) FROM flights_info`;
+    client.query(SQL).then(result=>{
+        let numberOfRows = parseInt(result.rows[0].count);
+        console.log('numberOfRows', numberOfRows);
+        let resultsDataArr=[];
+        let sql;
+        for (let i = 1; i <= numberOfRows; i++) {
+                let values=[i];
+                sql = `SELECT flight_num,airline,departure,arrival,flight_date,flight_status FROM flights_info WHERE id=$1`
+                client.query(sql,values).then(fResult=>{
+                    resultsDataArr.unshift(fResult.rows[0]);
+                });
+                sql =`SELECT user_name , comment ,flight_rate FROM reviews WHERE id=$1`
+                //solve it Nizar
+                waitingPromise = client.query(sql,values).then(rResult=>{
+                    resultsDataArr.unshift(rResult.rows[0]);
+                });
+            }
+                waitingPromise.then(()=>{
+                    response.render('./pages/community',{result:resultsDataArr});
+                    console.log('resultsDataArr', resultsDataArr);
+                });
+
+    });
+}
+
+
+
 
 client.connect(()=>{
     app.listen(PORT, () => {console.log(`Listening to Port ${PORT}`);});

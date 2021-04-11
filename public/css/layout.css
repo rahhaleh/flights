@@ -1,3 +1,57 @@
-section{
-    display:none ;
+main{
+    min-height: 600px;
+    max-width: 1360px;
+
+}
+#header form div{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+    height: min-content;
+    width: min-content;
+    border-radius: 10px;
+}
+#header form{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+#header form input{
+    margin: 0 20px;
+    width: 150px;
+    height: 20px;
+    background: white;
+    border-radius: 5px;
+    padding: 10px;
+}
+#header form button{
+    width: 100px;
+    height: 30px;
+    background-color: white;
+    margin: 0 auto;
+}
+
+#header{
+    background-image: url('/images/header.jpg');
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position-y: center;
+    border: white 1px solid;
+    height: 85vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+#airline-cards{
+    border: white 1px solid;
+    height: 300px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
 }

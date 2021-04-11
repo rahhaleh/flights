@@ -1,13 +1,13 @@
 
-a:link{ 	color: (internal value);
+a:link{
 text-decoration: none;
 cursor: auto;} 	
-a:visited{ 	color: (internal value);
+a:visited{ 	
 text-decoration: none;
 cursor: auto; }	
-a:link:active{ 	color: (internal value);
+a:link:active{ 	
 }
-a:visited:active{ 	color: (internal value);
+a:visited:active{ 	
 }
 
 address,article,aside,blockquote,body,dd,details,div,dl,dt,fieldset,figcaption,figure,footer,form,h1,h2,h3,h4,h5,h6,header,hr,html,iframe[seamless],legend,menu,nav,ol,p,pre,section,summary,ul{
@@ -179,10 +179,31 @@ vertical-align: inherit;
 border-color: inherit;} 	
 u 	{text-decoration: underline; }	
 ul 	{
-list-style-type: disc;
+list-style-type: none;
 margin-top: 1em;
 margin-bottom: 1 em;
 margin-left: 0;
 margin-right: 0;
 padding-left: 40px;} 	
-var 	{font-style: italic;} 	
+var {font-style: italic;} 	
+
+/*-------------------------------------------------------------------------------*/
+
+nav, nav ul{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    padding: 10px;
+}
+nav ul li{
+    margin:0 50px ;
+}
+
+footer{
+    height: 150px;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+}
