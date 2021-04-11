@@ -26,6 +26,7 @@ app.post('/search',getData);
 app.post('/review', renderReview);
 app.post('/community', saveToDB);
 app.get('/community', renderCommunity);
+app.get('/about', renderAbout);
 
 
 function Flight(data){
@@ -129,6 +130,10 @@ function renderCommunity(request,response){
                 });
 
     });
+}
+function renderAbout(req, res)
+{
+    res.render('./pages/about-us');
 }
 
 
