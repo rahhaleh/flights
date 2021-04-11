@@ -1,46 +1,49 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <%-include('../partials/head')%>
     <title>Document</title>
 </head>
 <body>
-
-    <div>
-        <ul>
-           <li>
-            <%= result.flight_date %>
-            </li>
+    <header>
+        <%-include('../partials/nav')%>
+    </header>
+    <main>
+        <div>
+            <ul>
             <li>
-                <%= result.flight_status %>
-            </li>
-            <li>
-                <%= result.departure %>
-            </li>
-            <li>
-                <%= result.arrival %>
-            </li>
-            <li>
-                <%= result.airline %>
-            </li>
-            <li>
-                <%= result.flight %>
-            </li>
-        </ul>
-    </div>
-    <form action="saveReview" method="POST">
-        <label>Please Enter Your Name :<input type="text" name="userName" id="" placeholder="user name"></label>
-        <label>Please Enter Your Review : <textarea name="userReview" id="" cols="30" rows="10" placeholder="Add your review here"></textarea> </label>
-        <label for="">Please Rate the Airways :<input type="radio" value="1" name="rate"> 1 </input>
-         
-            <input type="radio" value="2" name="rate"> 2 </input>
-            <input type="radio" value="3" name="rate"> 3 </input>
-            <input type="radio" value="4" name="rate"> 4 </input>
-            <input type="radio" value="5" name="rate"> 5 </input>
-        </label>
-<button type="submit">Add Review</button>
-    </form>
+                <%= result.flight_date %>
+                </li>
+                <li>
+                    <%= result.flight_status %>
+                </li>
+                <li>
+                    <%= result.departure %>
+                </li>
+                <li>
+                    <%= result.arrival %>
+                </li>
+                <li>
+                    <%= result.airline %>
+                </li>
+                <li>
+                    <%= result.flight %>
+                </li>
+            </ul>
+        </div>
+        <form action="/community" method="POST">
+            <label>Please Enter Your Name :<input type="text" name="userName" id="" placeholder="user name"></label>
+            <label>Please Enter Your Review : <textarea name="userReview" id="" cols="30" rows="10" placeholder="Add your review here"></textarea> </label>
+            <label for="">Please Rate the Airways :<input type="radio" value="1" name="rate"> 1 </input>
+            
+                <input type="radio" value="2" name="rate"> 2 </input>
+                <input type="radio" value="3" name="rate"> 3 </input>
+                <input type="radio" value="4" name="rate"> 4 </input>
+                <input type="radio" value="5" name="rate"> 5 </input>
+            </label>
+    <button type="submit">Add Review</button>
+        </form>
+    </main>
+    <%-include('../partials/footer')%>
 </body>
 </html>

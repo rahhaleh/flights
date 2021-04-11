@@ -27,6 +27,7 @@ CREATE TABLE IF NOT EXISTS flights_info (
 
 /*ALTER TABLE flights_info  ADD CONSTRAINT fk_airline FOREIGN KEY (airline) REFERENCES airlines(id);*/
 ALTER TABLE reviews  ADD CONSTRAINT fk_reviews FOREIGN KEY (flight_id) REFERENCES flights_info(id);
+ALTER TABLE reviews ADD UNIQUE(flight_id);
 
 
 
