@@ -1,7 +1,7 @@
 @import url('https://fonts.googleapis.com/css2?family=New+Tegomin&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Kiwi+Maru&family=New+Tegomin&display=swap');
 :root{
-    --color-1:#B1D4E0;
+    --color-1:#f4f6f7;
     --color-2:#0C2D48;
     --color-3:#16222c;
     --color-4:#2E8BC0;
@@ -36,24 +36,47 @@ form button{
 
 /* review page */
 #showSection{
+    margin-top: 50px;
+    background-color: var(--color-1);
     font-family: 'Kiwi Maru', serif;
     font-size: 18px;
+  
+}
+#showSection div{
+    border: 3px solid var(--color-2);
+    border-radius: 15px;
+}
+
+#showSection div:hover
+{
+        box-shadow:
+                4px 4px  4px 4px var(--color-2);
+        -webkit-transform: translateX(-5px);
+        transform: translateX(-5px);
+      
 }
 #showSection div ul li:nth-child(1){
-    color:var(--color-1);
-    border-bottom:2px solid var(--color-1);
+   
+    border-bottom:2px solid var(--color-2);
 }
 #showSection div ul li:hover{
     color: var(--color-5);  
 }
+#showSection button:hover{
+    box-shadow: inset 0 0 0 50px var(--color-2);
+    color:var(--color-1)
+}
 #communitySection {
     font-family: 'Kiwi Maru', serif;
-    font-size: 20px;
+    font-size: 16px;
+}
+#communitySection div {
+    border: 3px solid var(--color-2);
+    border-radius: 15px;
 }
 nav ul li{
     color: var(--color-2);
     font-weight: bold;
-/*     background-color: var(--color-2);
- */}
+}
 
 

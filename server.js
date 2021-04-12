@@ -29,13 +29,14 @@ app.get('/community', renderCommunity);
 app.get('/about', renderAbout);
 
 
-function Flight(data){
+function Flight(data,logo){
 this.flight_date=(data.flight_date)?data.flight_date:'no available flight date';
 this.flight_status=(data.flight_status)?data.flight_status:'no available flight status';
 this.departure=(data.departure.airport)?data.departure.airport:'no available departure';
 this.arrival=(data.arrival.airport)?data.arrival.airport:'no available arrival';
 this.airline=(data.airline.name)?data.airline.name:'no available airline name';
 this.flight=(data.flight.number)?data.flight.number:'no available flight number';
+this.logo=logo;
 }
 
 // 1- insert all the NEW airlines names to the airlines table getting them from the flights_info table in the airline column.
@@ -76,8 +77,8 @@ function renderHomePage(request,response){
 function getData(request,response){
     let departure;
     let arrival;
-    
-    const airlineName=request.body.airline;
+    let logo;
+    const airlineName=request.body.airline.toLowerCase();
     const flightNumber=(request.body.flightnumber)?request.body.flightnumber:' ';
     const key=process.env.FLIGHT_KEY;
     let url=`http://api.aviationstack.com/v1/flights?access_key=${key}&airline_name=${airlineName}`
@@ -102,12 +103,20 @@ function getData(request,response){
         url=`${url}&flight_number=${flightNumber}`;
     }
     url=`${url}&limit=5`;
-    console.log('last url////////////////////////////',url)
+    console.log('last url////////////////////////////',url);
+
+    const airlineLogo=require('./data/airlineLogo.json');
+    airlineLogo.forEach(element=>{
+        if(element.name.toLowerCase()===airlineName){
+           logo =element.logo;
+        }
+    })
     superagent.get(url).then(apiResponse=>{
       console.log(apiResponse.body.data);
       flightArray= apiResponse.body.data.map(element=>{
-      return new Flight(element);
+      return new Flight(element,logo);
       })
+
       response.render('./pages/show',{ searchResults: flightArray });
   }).catch((err)=> {
     console.log(err);
@@ -116,8 +125,8 @@ function getData(request,response){
 }
 function renderReview(request, response){
     let data =request.body;
-    let SQL = `INSERT INTO flights_info (flight_num,airline,departure,arrival,flight_date,flight_status) VALUES($1,$2,$3,$4,$5,$6) RETURNING *`
-    let values=[data.flight_num, data.airline, data.departure, data.arrival, data.flight_date, data.flight_status];
+    let SQL = `INSERT INTO flights_info (flight_num,airline,departure,arrival,flight_date,flight_status,logo) VALUES($1,$2,$3,$4,$5,$6,$7) RETURNING *`
+    let values=[data.flight_num, data.airline, data.departure, data.arrival, data.flight_date, data.flight_status,data.logo];
     let resDBPromis=client.query(SQL,values);
     response.render('./pages/review',{result : request.body} );
 }
@@ -145,14 +154,19 @@ function renderCommunity(request,response){
         let sql;
         for (let i = 1; i <= numberOfRows; i++) {
                 let values=[i];
-                sql = `SELECT flight_num,airline,departure,arrival,flight_date,flight_status FROM flights_info WHERE id=$1`
+                sql = `SELECT flight_num,airline,departure,arrival,flight_date,flight_status,logo FROM flights_info WHERE id=$1`
                 client.query(sql,values).then(fResult=>{
                     resultsDataArr.unshift(fResult.rows[0]);
                 });
                 sql =`SELECT user_name , comment ,flight_rate FROM reviews WHERE id=$1`
                 //solve it Nizar
                 waitingPromise = client.query(sql,values).then(rResult=>{
-                    resultsDataArr.unshift(rResult.rows[0]);
+                    if(rResult.rows[0]){
+                        resultsDataArr.unshift(rResult.rows[0]);
+                    }else{
+                        resultsDataArr.shift();
+                    }
+                  
                 });
             }
                 waitingPromise.then(()=>{

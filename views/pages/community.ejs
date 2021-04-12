@@ -10,22 +10,37 @@
     </header>
     <main>
         <section id="communitySection">
-            <div>
-            <ul>
-                <li>airline name: <%= result[1].airline %></li>
-                <br>
-                <li>departure: <%= result[1].departure %></li>
-                <li>arrival: <%= result[1].arrival %></li>
-                <br>
-                <li><%= result[1].flight_date %></li>
-            </ul>
-        <ul>
-            <li>name: <%= result[0].user_name %></li>
-            <li>rating: <%= result[0].flight_rate %></li>
-            <br>
-            <li>comment: <%= result[0].comment %></li>
-        </ul>
-        </div>
+         
+
+                <% for(let i=0;i<result.length;i++){ %>
+                <% if(i%2===0){ %>
+                    <div>
+                   <ul>
+                        <li><img src="/images/user.png" width="35px"/></li>&NonBreakingSpace; 
+                         <li> <b><%= result[i].user_name %></b> </li>
+                         <br>
+                         <li><b> Rating: </b><%= result[i].flight_rate %></li>
+                         <br>
+                         <li><b>Comment:</b>  <%= result[i].comment %></li>
+                   
+                   
+            <% }else{%>
+              
+                    <li id="logo"><img src="<%= result[i].logo %>" alt="flight logo" /> </li>
+                  
+                    <li><%= result[i].airline %></li>
+                    <br>
+                    <li><img src="/images/takeoff-the-plane.png"style="width: 20px;"> <%= result[i].departure %></li>
+                    
+                    <li><img src="/images/plane-landing.png" style="width: 20px;"> <%= result[i].arrival %></li>
+                    <br>
+                    <li><%= result[i].flight_date %></li>
+                </ul>
+            </div>
+        <% } %>
+    
+        <% } %>
+  
     </section>
     </main>
     <%-include('../partials/footer')%>
