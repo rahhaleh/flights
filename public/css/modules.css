@@ -71,7 +71,7 @@ p:nth-child(1){
 .radio:active{
     color: var(--color-2);
 }
-=======
+/*--------------------------------------------------------------------------------------*/
 *{
     box-sizing: border-box;
 }
@@ -79,7 +79,7 @@ p:nth-child(1){
 
 @media screen and (max-width:468px)
 {
-    div {
+  .hvr-bob {
         /* border: black 1px solid; */
         background-color: rgb(247, 241, 241) ;
         /* padding: 20px; */
@@ -94,7 +94,7 @@ p:nth-child(1){
 #d {grid-area: d;}
 #e {grid-area: e;}
 #f {grid-area: f;}
-section {
+#team-section {
     display: grid;
     grid-template-areas: 
     'a a'
@@ -103,12 +103,12 @@ section {
     'f f';
   
 }
-p{
+#a{
     padding-left: 40px;
     /* text-align: center; */
 }
 
-img{
+.hvr-bob img{
     height: 200px;
     width: 200px;
     padding: 20px;
@@ -121,7 +121,7 @@ img{
     bottom: 20px;
 
 }
-h4{
+.hvr-bob h4{
     position: relative;
     bottom: 15px;
 
@@ -131,80 +131,15 @@ h4{
     width: 200px; */
     grid-column-start: 0;
     grid-column-end: 1;
-    /* background-color: rgb(247, 241, 241) ; */
+
 }
-/* }
-.hvr-bob :hover {
-    color: #6da1cc;
-    transition-duration: 360ms;
-  }
-
-
-  @-webkit-keyframes hvr-bob {
-    0% {
-      -webkit-transform: translateY(-8px);
-      transform: translateY(-8px);
-    }
-    50% {
-      -webkit-transform: translateY(-4px);
-      transform: translateY(-4px);
-    }
-    100% {
-      -webkit-transform: translateY(-8px);
-      transform: translateY(-8px);
-    }
-  }
-  @keyframes hvr-bob {
-    0% {
-      -webkit-transform: translateY(-8px);
-      transform: translateY(-8px);
-    }
-    50% {
-      -webkit-transform: translateY(-4px);
-      transform: translateY(-4px);
-    }
-    100% {
-      -webkit-transform: translateY(-8px);
-      transform: translateY(-8px);
-    }
-  }
-  @-webkit-keyframes hvr-bob-float {
-    100% {
-      -webkit-transform: translateY(-8px);
-      transform: translateY(-8px);
-    }
-  }
-  @keyframes hvr-bob-float {
-    100% {
-      -webkit-transform: translateY(-8px);
-      transform: translateY(-8px);
-    }}
-  
-  .hvr-bob:hover,
-  .hvr-bob:focus, 
-  .hvr-bob:active {
-    -webkit-animation-name: hvr-bob-float, hvr-bob;
-    animation-name: hvr-bob-float, hvr-bob;
-    -webkit-animation-duration: 0.3s, 1.5s;
-    animation-duration: 0.3s, 1.5s;
-    -webkit-animation-delay: 0s, 0.3s;
-    animation-delay: 0s, 0.3s;
-    -webkit-animation-timing-function: ease-out, ease-in-out;
-    animation-timing-function: ease-out, ease-in-out;
-    -webkit-animation-iteration-count: 1, infinite;
-    animation-iteration-count: 1, infinite;
-    -webkit-animation-fill-mode: forwards;
-    animation-fill-mode: forwards;
-    -webkit-animation-direction: normal, alternate;
-    animation-direction: normal, alternate;
-  }  */
 
 }
 
 
 @media screen and  (max-width:960px ) and (min-width:469px )
 {
-    div {
+  .hvr-bob {
         /* border: black 1px solid; */
         background-color: rgb(247, 241, 241) ;
         /* padding: 20px; */
@@ -219,7 +154,7 @@ h4{
 #d {grid-area: d;}
 #e {grid-area: e;}
 #f {grid-area: f;}
-section {
+#team-section {
     display: grid;
     grid-template-areas: 
     'a a'
@@ -229,12 +164,12 @@ section {
     ;
   
 }
-p{
+#a{
     padding-left: 40px;
     /* text-align: center; */
 }
 
-img{
+.hvr-bob img{
     height: 200px;
     width: 200px;
     padding: 20px;
@@ -247,7 +182,7 @@ img{
     bottom: 20px;
 
 }
-h4{
+.hvr-bob h4{
     position: relative;
     bottom: 15px;
 
@@ -259,77 +194,11 @@ h4{
     grid-column-end: 1;
     /* background-color: rgb(247, 241, 241) ; */
 }
-/*.hvr-bob :hover {
-    color: #6da1cc;
-    transition-duration: 360ms;
-  }
-
-
-  @-webkit-keyframes hvr-bob {
-    0% {
-      -webkit-transform: translateY(-8px);
-      transform: translateY(-8px);
-    }
-    50% {
-      -webkit-transform: translateY(-4px);
-      transform: translateY(-4px);
-    }
-    100% {
-      -webkit-transform: translateY(-8px);
-      transform: translateY(-8px);
-    }
-  }
-  @keyframes hvr-bob {
-    0% {
-      -webkit-transform: translateY(-8px);
-      transform: translateY(-8px);
-    }
-    50% {
-      -webkit-transform: translateY(-4px);
-      transform: translateY(-4px);
-    }
-    100% {
-      -webkit-transform: translateY(-8px);
-      transform: translateY(-8px);
-    }
-  }
-  @-webkit-keyframes hvr-bob-float {
-    100% {
-      -webkit-transform: translateY(-8px);
-      transform: translateY(-8px);
-    }
-  }
-  @keyframes hvr-bob-float {
-    100% {
-      -webkit-transform: translateY(-8px);
-      transform: translateY(-8px);
-    }}
-  
-  .hvr-bob:hover,
-  .hvr-bob:focus, 
-  .hvr-bob:active {
-    -webkit-animation-name: hvr-bob-float, hvr-bob;
-    animation-name: hvr-bob-float, hvr-bob;
-    -webkit-animation-duration: 0.3s, 1.5s;
-    animation-duration: 0.3s, 1.5s;
-    -webkit-animation-delay: 0s, 0.3s;
-    animation-delay: 0s, 0.3s;
-    -webkit-animation-timing-function: ease-out, ease-in-out;
-    animation-timing-function: ease-out, ease-in-out;
-    -webkit-animation-iteration-count: 1, infinite;
-    animation-iteration-count: 1, infinite;
-    -webkit-animation-fill-mode: forwards;
-    animation-fill-mode: forwards;
-    -webkit-animation-direction: normal, alternate;
-    animation-direction: normal, alternate;
-  } 
-  
 }
-*/}
 @media screen and  (min-width:960px ) 
 {
     
-    div {
+    .hvr-bob {
         /* border: black 1px solid; */
         background-color: rgb(247, 241, 241) ;
         /* padding: 20px; */
@@ -344,15 +213,14 @@ h4{
 #d {grid-area: d;}
 #e {grid-area: e;}
 #f {grid-area: f;}
-section {
+#team-section {
     display: grid;
     grid-template-areas: 
     'a a a a a'
     'b c d e f'
     ;
-  
 }
-p{
+#a{
     /* padding-left: 40px; */
     width: 800px;
     /* text-align: center; */
@@ -365,7 +233,7 @@ p{
 
 }
 
-img{
+.hvr-bob img{
     height: 200px;
     width: 200px;
     padding: 20px;
@@ -378,7 +246,7 @@ img{
     bottom: 20px;
 
 }
-h4{
+.hvr-bob h4{
     position: relative;
     bottom: 15px;
 
