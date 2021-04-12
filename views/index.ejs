@@ -27,7 +27,12 @@
         </section>
         <!--NIZAR-->
         <section id="airline-cards">
-            <div>Royal Jordanian</div>
+            <%result.forEach(airlineObj=>{%>
+                <div>
+                    <h3><%=Object.keys(airlineObj)[0]%></h3>
+                    <h5><%=Object.values(airlineObj)[0]%><span> &starf;</span></h5>
+                </div>
+                <%})%>
         </section>
         <!--NIZAR-->
 
