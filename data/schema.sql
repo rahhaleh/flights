@@ -6,7 +6,7 @@ CREATE TABLE IF NOT EXISTS airlines (
     id SERIAL PRIMARY KEY,
     airline varchar(255),
     rate NUMERIC,
-     logo TEXT
+    logo TEXT
 );
 
 CREATE TABLE IF NOT EXISTS reviews (

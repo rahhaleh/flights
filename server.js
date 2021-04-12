@@ -43,13 +43,16 @@ this.logo=logo;
 // 4- combine the airlinesNamesArr and ratesArr into one array of objects.
 // 5- sort the array of objects and then render the page.
 function renderHomePage(request,response){
+    let ratingPromis;
     let combinedArrOfObj=[];
     let sql;
-    sql = `INSERT INTO airlines (airline) SELECT airline FROM flights_info WHERE flights_info.airline NOT in (SELECT airline FROM airlines)`;
+    sql = `INSERT INTO airlines (airline,logo) SELECT airline,logo FROM flights_info WHERE flights_info.airline NOT in (SELECT airline FROM airlines)`;
     client.query(sql).then(()=>{
-        sql = `SELECT DISTINCT airline FROM airlines`;
+        sql = `SELECT DISTINCT airline,logo FROM airlines`;
         client.query(sql).then(result=>{
+            console.log('result', result.rows);
             let airlinesNamesArr= result.rows.map(obj=>Object.values(obj)[0]);
+            let airlinesLogosArr= result.rows.map(obj=>Object.values(obj)[1]);
             sql = `SELECT AVG(flight_rate) FROM reviews WHERE flight_id in (select id from flights_info where airline = $1)`;
             let ratesArr=[];
             for (let i = 0; i < airlinesNamesArr.length; i++) {
@@ -58,15 +61,20 @@ function renderHomePage(request,response){
                     ratesArr.push(parseFloat(result.rows[0].avg).toFixed(2));
                 });             
             }
-            ratingPromis.then(()=>{
-                for (let j = 0; j < airlinesNamesArr.length; j++) {
-                    combinedArrOfObj[j]={[airlinesNamesArr[j]]:ratesArr[j]};
-                }
-                //sorting the combinedArrOfObj from hieght rate to lowest.
-                combinedArrOfObj.sort((a,b)=>Object.values(b)[0]-Object.values(a)[0]);
+            if(ratingPromis){
+
+                ratingPromis.then(()=>{
+                    for (let j = 0; j < airlinesNamesArr.length; j++) {
+                        combinedArrOfObj[j]={[airlinesNamesArr[j]]:ratesArr[j],logo:airlinesLogosArr[j]};
+                    }
+                    //sorting the combinedArrOfObj from hieght rate to lowest.
+                    combinedArrOfObj.sort((a,b)=>Object.values(b)[0]-Object.values(a)[0]);
+                    response.render('./',{result:combinedArrOfObj});
+                    console.log('combinedArrOfObj', combinedArrOfObj);
+                });
+            }else if(airlinesNamesArr.length===0){
                 response.render('./',{result:combinedArrOfObj});
-                console.log('combinedArrOfObj', combinedArrOfObj);
-            });
+            }
         });
     });
     
@@ -141,7 +149,7 @@ function saveToDB(request, response)
 }
 
 function renderCommunity(request,response){
-
+    let waitingPromise;
     console.log('in render community')
 
     let SQL = `SELECT count(id) FROM flights_info`;
@@ -155,6 +163,8 @@ function renderCommunity(request,response){
                 sql = `SELECT flight_num,airline,departure,arrival,flight_date,flight_status,logo FROM flights_info WHERE id=$1`
                 client.query(sql,values).then(fResult=>{
                     resultsDataArr.unshift(fResult.rows[0]);
+                    console.log('fResult.rows[0]', fResult.rows[0])
+                    console.log('>>>>>>>>>>>.resultsDataArr', resultsDataArr)
                 });
                 sql =`SELECT user_name , comment ,flight_rate FROM reviews WHERE id=$1`
                 //solve it Nizar
@@ -167,10 +177,14 @@ function renderCommunity(request,response){
                   
                 });
             }
-                waitingPromise.then(()=>{
+                if(waitingPromise){
+                    waitingPromise.then(()=>{
+                        response.render('./pages/community',{result:resultsDataArr});
+                        console.log('resultsDataArr', resultsDataArr);
+                    });
+                }else if(numberOfRows===0){
                     response.render('./pages/community',{result:resultsDataArr});
-                    console.log('resultsDataArr', resultsDataArr);
-                });
+                }
 
     });
 }
