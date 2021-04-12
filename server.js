@@ -1,5 +1,3 @@
-
-
 let flightArray=[];
 
 require('dotenv').config();
