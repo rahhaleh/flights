@@ -35,5 +35,21 @@ form button{
 
 }
 
+/* review page */
+#showSection{
+    font-family: 'Kiwi Maru', serif;
+    font-size: 18px;
+}
+#showSection div ul li:nth-child(1){
+    color:var(--color-1);
+    border-bottom:2px solid var(--color-1);
+}
+#showSection div ul li:hover{
+    color: var(--color-5);  
+}
+#communitySection {
+    font-family: 'Kiwi Maru', serif;
+    font-size: 20px;
+}
 
 

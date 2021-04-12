@@ -197,7 +197,11 @@ nav, nav ul{
     padding: 10px;
 }
 nav ul li{
-    margin:0 50px ;
+    margin:0 2% ;
+    
+}
+nav{
+    width: 100%;
 }
 
 footer{

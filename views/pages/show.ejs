@@ -11,7 +11,7 @@
         <%-include('../partials/nav')%>
     </header>
     <main>
-        <section>
+        <section id="showSection">
             <% if(searchResults) { %>
                 <% searchResults.forEach(flight=>{ %>
                     <div>
@@ -35,17 +35,17 @@
                                 <%= flight.flight %>
                             </li>
                         </ul>
-
+                        <form action="/review" method="POST">
+                            <input type="hidden" value=" <%= flight.flight %>" name="flight_num" > 
+                            <input type="hidden" value=" <%= flight.airline %>" name="airline" > 
+                            <input type="hidden" value="<%= flight.departure %>" name="departure" > 
+                            <input type="hidden" value="<%= flight.arrival %>" name="arrival" > 
+                            <input type="hidden" value="<%= flight.flight_date %>" name="flight_date" > 
+                            <input type="hidden" value="<%= flight.flight_status %>" name="flight_status" > 
+                            <button type="submit">Add My Review</button>
+                        </form>
                     </div>
-                    <form action="/review" method="POST">
-                        <input type="hidden" value=" <%= flight.flight %>" name="flight_num" > 
-                        <input type="hidden" value=" <%= flight.airline %>" name="airline" > 
-                        <input type="hidden" value="<%= flight.departure %>" name="departure" > 
-                        <input type="hidden" value="<%= flight.arrival %>" name="arrival" > 
-                        <input type="hidden" value="<%= flight.flight_date %>" name="flight_date" > 
-                        <input type="hidden" value="<%= flight.flight_status %>" name="flight_status" > 
-                        <button type="submit">Add My Review</button>
-                    </form>
+                   
                     <% }) %>
                         <% } %>
                     </section>
