@@ -1,0 +1,72 @@
+#review-main{
+    display: flex;
+    justify-content: space-evenly;
+    flex-flow: row nowrap;
+    align-items: center;
+    margin-bottom: 20px;
+}
+#reviewed-flight-info{
+    border: 2px solid var(--color-2);
+    width: 50%;
+    margin-bottom: 20px;
+    color: var(--color-2);
+    margin-top:15px ;
+    border-radius: 15px;
+}
+#reviewed-flight-info p{
+    margin-left: 10px;
+}
+p:nth-child(1){
+    /* font-size: xx-large; */
+}
+#review-form-section{
+    display: flex;
+    flex-flow: column nowrap;
+    justify-content: center;
+    align-items: center;
+}
+#review-form {
+    display: flex;
+    flex-flow: column nowrap;
+    justify-content: center;
+    align-items: center;
+}
+#review-form input[type=text]{
+    width:300px;
+    height: 25px;
+    border-radius: 10px;
+    border: 1px solid var(--color-2)
+
+
+}
+#review-form textarea{
+    width:300px;
+    margin: 10px 0 10px 0;
+    border-radius: 10px;
+    border: 1px solid var(--color-2)
+
+
+}
+#review-form button{
+  color: var(--color-2);
+  border: 2px solid var(--color-2);
+  border-radius: 0px;
+  padding: 9px 18px;
+  font-size: 14px;
+  letter-spacing: 1px;
+  cursor: pointer;
+  box-shadow: inset 0 0 0 0 var(--color-2);
+  -webkit-transition: ease-out 0.4s;
+  -moz-transition: ease-out 0.4s;
+  transition: ease-out 0.4s;
+  border-radius: 10px;
+  width:300px;
+  margin-top: 10px;
+}
+#review-form button:hover{
+    box-shadow: inset 0 0 0 50px var(--color-2);
+    color:var(--color-1)
+}
+.radio:active{
+    color: var(--color-2);
+}

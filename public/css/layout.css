@@ -28,10 +28,24 @@ main{
     padding: 10px;
 }
 #header form button{
-    width: 100px;
-    height: 30px;
-    background-color: white;
-    margin: 0 auto;
+    color: var(--color-2);
+    border: 2px solid var(--color-2);
+    border-radius: 0px;
+    padding: 9px 18px;
+    font-size: 14px;
+    letter-spacing: 1px;
+    cursor: pointer;
+    box-shadow: inset 0 0 0 0 var(--color-2);
+    -webkit-transition: ease-out 0.4s;
+    -moz-transition: ease-out 0.4s;
+    transition: ease-out 0.4s;
+    border-radius: 10px;
+    width:300px;
+    margin-top: 10px;;
+}
+#header form button:hover{
+    box-shadow: inset 0 0 0 50px var(--color-2);
+    color:var(--color-1)
 }
 
 #header{
