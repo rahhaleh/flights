@@ -49,12 +49,26 @@ main{
 
 #airline-cards{
     border: white 1px solid;
-    height: 300px;
     display: flex;
-    flex-direction: column;
+    flex-direction: row;
     align-items: center;
     justify-content: center;
+    flex-wrap: wrap;
 }
+
+#airline-cards div{
+    border: white 2px solid;
+    text-align: center;
+    line-height: 50px;
+    width: 250px;
+    height: 200px;
+    margin: 20px 20px;
+}
+
+#airline-cards div span{
+    font-size: 20px;
+}
+
 /* review page */
 #showSection{
     display: flex;
@@ -112,3 +126,4 @@ main{
     display: inline;
     margin: 1%;
  }
+
