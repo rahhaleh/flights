@@ -5,21 +5,36 @@
     <title>Document</title>
 </head>
 <body>
+    <header>
+        <%-include('./partials/nav')%>
+    </header>
     <main>
-        <form action="/search" method="post">
-            <label for="">airline name <input type="text" name="airline"></label>
-            <br>
-            <label for="">flight number <input type="text" name="flightnumber"></label>
-            <br>
-            <label for="">Departure <input type="text" name="departure"></label>
-            <br>
-            <label for="">Arrival <input type="text" name="arrival"></label>
-            <br>
-            <button type="submit">search</button>
-        </form>
-        
+        <section id="header">
+
+            <form action="/search" method="post">
+                <div>
+                    <input type="text" name="airline" placeholder="airline name" required>
+                    <br>
+                    <input type="text" name="flightnumber" placeholder="flight number">
+                    <br>
+                    <input type="text" name="departure" placeholder="Departure">
+                    <br>
+                    <input type="text" name="arrival" placeholder="Arrival">
+                    <br>    
+                </div>
+                <button type="submit">search</button>
+            </form>
+        </section>
+        <!--NIZAR-->
+        <section id="airline-cards">
+            <div>Royal Jordanian</div>
+        </section>
+        <!--NIZAR-->
+
+            
 
 
     </main>
+    <%-include('./partials/footer')%>
 </body>
 </html>

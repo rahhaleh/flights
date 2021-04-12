@@ -5,24 +5,30 @@
     <title>Community</title>
 </head>
 <body>
-    <% fData.forEach(obj=>{ %>
-        <ul>
-            <li><%=obj.flight_num%></li>
-            <li><%=obj.airline%></li>
-            <li><%=obj.departure%></li>
-            <li><%=obj.arrival%></li>
-            <li><%=obj.flight_date%></li>
-            <li><%=obj.flight_status%></li>
-        </ul>
-    <%})%>
-    <% result.forEach(obj=>{ %>
-        <ul>
-            <li><%=obj.user_name%></li>
-            <li><%=obj.comment%></li>
-            <li><%=obj.flight_rate%></li>
-        </ul>
-    <%})%>
-    
-
+    <header>
+        <%-include('../partials/nav')%>
+    </header>
+    <main>
+        <section id="communitySection">
+         <% result.forEach(obj=>{ %>
+            <div>
+            <ul>
+                <li>flight_number: <%= obj.flight_num %></li>
+                <li>airline_name: <%= obj.airline %></li>
+                <li>departure: <%= obj.departure %></li>
+                <li>arrival <%= obj.arrival %></li>
+                <li>flight_date: <%= obj.flight_date %></li>
+                <li>flight_status: <%= obj.flight_status %></li>
+            </ul>
+            <ul>
+                <li>user_name: <%= obj.user_name %></li>
+                <li>comment: <%= obj.comment %></li>
+                <li>flight_rate: <%= obj.flight_rate %></li>
+            </ul>
+        </div>
+        <%})%> 
+    </section>
+    </main>
+    <%-include('../partials/footer')%>
 </body>
 </html>
