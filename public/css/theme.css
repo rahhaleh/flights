@@ -1,11 +1,11 @@
 @import url('https://fonts.googleapis.com/css2?family=New+Tegomin&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Kiwi+Maru&family=New+Tegomin&display=swap');
 :root{
-    --color-1:#D6F7FF;
-    --color-2:#A43030;
-    --color-3:#000000;
-    --color-4:#FFE6E6;
-    --color-5:#CA4C4C;
+    --color-1:#B1D4E0;
+    --color-2:#0C2D48;
+    --color-3:#16222c;
+    --color-4:#2E8BC0;
+    --color-5:#145DA0;
 }
 *{
     font-family: 'Kiwi Maru', serif;
@@ -16,8 +16,7 @@ body{
     font-family: 'Kiwi Maru', serif;
 }
 nav{
-    background-color: var(--color-2);
-    color: var(--color-4);
+    background-color: transparent;
     font-size: 18px;
 }
 footer{
@@ -26,7 +25,7 @@ footer{
 
 }
 form div{
-    background-color:var(--color-5);
+    background-color:#0c2d485d;
 }
 form input{
     border: solid 1px var(--color-5);
@@ -51,5 +50,10 @@ form button{
     font-family: 'Kiwi Maru', serif;
     font-size: 20px;
 }
+nav ul li{
+    color: var(--color-2);
+    font-weight: bold;
+/*     background-color: var(--color-2);
+ */}
 
 

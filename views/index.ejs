@@ -11,6 +11,8 @@
     <main>
         <section id="header">
 
+            <video width="100%" autoplay muted loop preload="auto" src="/images/header.mp4"></video>
+
             <form action="/search" method="post">
                 <div>
                     <input type="text" name="airline" placeholder="airline name" required>
@@ -27,7 +29,12 @@
         </section>
         <!--NIZAR-->
         <section id="airline-cards">
-            <div>Royal Jordanian</div>
+            <%result.forEach(airlineObj=>{%>
+                <div>
+                    <h3><%=Object.keys(airlineObj)[0]%></h3>
+                    <h5><%=Object.values(airlineObj)[0]%><span> &starf;</span></h5>
+                </div>
+                <%})%>
         </section>
         <!--NIZAR-->
 

@@ -1,49 +1,44 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <%-include('../partials/head')%>
-    <title>Document</title>
+        <title>Document</title>
 </head>
+
 <body>
     <header>
         <%-include('../partials/nav')%>
     </header>
-    <main>
-        <div>
-            <ul>
-            <li>
-                <%= result.flight_date %>
-                </li>
-                <li>
-                    <%= result.flight_status %>
-                </li>
-                <li>
-                    <%= result.departure %>
-                </li>
-                <li>
-                    <%= result.arrival %>
-                </li>
-                <li>
-                    <%= result.airline %>
-                </li>
-                <li>
-                    <%= result.flight %>
-                </li>
-            </ul>
+    <main id="review-main">
+        <div id="reviewed-flight-info">
+            <p><%= result.airline %> Airline.</p>
+            <p>Flight Number: <%= result.flight %></p>           
+            <p>Departure: <img src="/images/takeoff-the-plane.png"style="width: 20px;"> <%= result.departure %> Airport.</p>                
+            <p>Arrival: <img src="/images/plane-landing.png" style="width: 20px;"> <%= result.arrival %> Airport.</p>                               
+            <p>Date:  <%= result.flight_date %>. </p>               
+            <p>Status: <%= result.flight_status %>.</p>                
         </div>
-        <form action="/community" method="POST">
-            <label>Please Enter Your Name :<input type="text" name="userName" id="" placeholder="user name"></label>
-            <label>Please Enter Your Review : <textarea name="userReview" id="" cols="30" rows="10" placeholder="Add your review here"></textarea> </label>
-            <label for="">Please Rate the Airways :<input type="radio" value="1" name="rate"> 1 </input>
-            
-                <input type="radio" value="2" name="rate"> 2 </input>
-                <input type="radio" value="3" name="rate"> 3 </input>
-                <input type="radio" value="4" name="rate"> 4 </input>
-                <input type="radio" value="5" name="rate"> 5 </input>
-            </label>
-    <button type="submit">Add Review</button>
-        </form>
+
+        <section id="review-form-section">
+            <form id="review-form" action="/community" method="POST">
+
+              
+                    <input type="text" name="userName" id="" placeholder="Your Username" required>
+                    <textarea name="userReview" id="" cols="30" rows="10" placeholder="Add your review here" required></textarea>
+                    <label for="">Rating:
+                        <input class="radio" type="radio" value="5" name="rate"> 5 </input>
+                        <input class="radio" type="radio" value="4" name="rate"> 4 </input>
+                        <input class="radio" type="radio" value="3" name="rate"> 3 </input>
+                        <input class="radio" type="radio" value="2" name="rate"> 2 </input>
+                        <input class="radio" type="radio" value="1" name="rate"> 1 </input>
+                    </label>
+                    <button type="submit">Post Review</button>
+               
+            </form>
+        </section>
     </main>
     <%-include('../partials/footer')%>
 </body>
+
 </html>

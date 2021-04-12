@@ -194,10 +194,17 @@ nav, nav ul{
     flex-direction: row;
     align-items: center;
     justify-content: space-between;
-    padding: 10px;
 }
 nav ul li{
     margin:0 50px ;
+    padding: 5px;
+    border-radius:5px ;
+    cursor: pointer;
+}
+nav p{
+    padding-left: 10px;
+    font-family: cursive;
+    font-size: 25px;
 }
 
 footer{
@@ -206,4 +213,8 @@ footer{
     flex-direction: row;
     align-items: center;
     justify-content: center;
+    color: white;
+}
+video{
+    z-index: -1;
 }
