@@ -19,7 +19,11 @@
   }
 
 /* community ejs  */
+#communitySection div ul {
+  display: grid;
+  
 
+}
   /* review ejs  */
 #review-main{
     display: flex;
