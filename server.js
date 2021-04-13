@@ -153,7 +153,10 @@ function renderCommunity(request,response){
     console.log(request.query)
     let waitingPromise;
     let searchValue=request.query.search;
-    let regex= new RegExp(searchValue);
+    console.log('searchValue', searchValue);
+    let regex= new RegExp(searchValue,'i');
+    let searchAirlineFound=false;
+    let matchedCommentFound = false;
     console.log('in render community')
     
     let SQL = `SELECT count(id) FROM flights_info`;
@@ -161,39 +164,53 @@ function renderCommunity(request,response){
         let numberOfRows = parseInt(result.rows[0].count);
         console.log('numberOfRows', numberOfRows);
         let resultsDataArr=[];
+        let temporaryArr=[];
         let sql;
         for (let i = 1; i <= numberOfRows; i++) {
                 let values=[i];
                 sql = `SELECT flight_num,airline,departure,arrival,flight_date,flight_status,logo FROM flights_info WHERE id=$1`
-                client.query(sql,values).then(fResult=>{                   
-                        if(searchValue){
-                            resultsDataArr= fResult.rows.filter(obj=>{  
-                                console.log('+++++++++++++++++++++++++++++',regex.test(obj.airline))                             
-                                return regex.test(obj.airline);                                 
-                            })  
-                            }else{
+                client.query(sql,values).then(fResult=>{  
+                        if( (searchAirlineFound && matchedCommentFound) || (!searchAirlineFound && !matchedCommentFound)){
+
+                            if(searchValue){
+                                temporaryArr=[];
+                                temporaryArr= fResult.rows.filter(obj=>{  
+                                    console.log('regex test',regex.test(obj.airline))                             
+                                    searchAirlineFound = regex.test(obj.airline);   
+                                    matchedCommentFound=false;
+                                    return searchAirlineFound;                              
+                                });  
+                                if(temporaryArr.length){
+                                    resultsDataArr.unshift(temporaryArr[0]);
+                                }
+                            }else if(!searchValue){
                                 resultsDataArr.unshift(fResult.rows[0]);
                             } 
-                    console.log('>>>>>>>>>>>.resultsDataArr', resultsDataArr)
+                        }
+                    console.log('resultsDataArr UP', resultsDataArr)
                 });
                 sql =`SELECT user_name , comment ,flight_rate FROM reviews WHERE id=$1`
                 //solve it Nizar
                 waitingPromise = client.query(sql,values).then(rResult=>{
-                    if(rResult.rows[0]){
+                    if(!searchValue){
+                        if(rResult.rows[0]){
+                            resultsDataArr.unshift(rResult.rows[0]);
+                        }else{
+                            resultsDataArr.shift();
+                        }
+                    }else if(searchAirlineFound && !matchedCommentFound){ 
                         resultsDataArr.unshift(rResult.rows[0]);
-                    }else{
-                        resultsDataArr.shift();
+                        matchedCommentFound =true;
                     }
-                  
                 });
             }
                 if(waitingPromise){
                     waitingPromise.then(()=>{
-                        response.render('./pages/community',{result:resultsDataArr});
-                        console.log('resultsDataArr//////////////////////////////////////////////////', resultsDataArr);
+                        response.render('./pages/community',{result:resultsDataArr,empty:'Sorry, no matched results'});
+                        console.log('resultsDataArr DOWN', resultsDataArr);
                     });
                 }else if(numberOfRows===0){
-                    response.render('./pages/community',{result:resultsDataArr});
+                    response.render('./pages/community',{result:resultsDataArr,empty:'it seems to be empty here! \n try to review your flight'});
                 }
 
     });
