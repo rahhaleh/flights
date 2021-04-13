@@ -382,6 +382,13 @@ padding: 5%;
 
 }
 
+
+.star{
+  color: transparent;
+  text-shadow: 0 0 0 rgb(255,215,0);
+  -webkit-text-stroke-width: 1px;
+  -webkit-text-stroke-color: black;
+
 @media screen and (max-width: 960px) {
   #review-main {
     display: flex;
@@ -428,4 +435,5 @@ width: 90%;
     margin-bottom: 0;
   }
  
+
 }

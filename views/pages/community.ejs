@@ -8,7 +8,7 @@
     <header>
         <%-include('../partials/nav')%>
     </header>
-    <main>
+    <main id="community-main">
         <section id="community-search-section">
             <form id="community-search-form" action="/community/search" method="GET" >
                 <input type="text" name="search" placeholder="Enter your search"   required>
@@ -26,7 +26,7 @@
                          <li> <b><%= result[i].user_name %></b> </li>
                         
                          <li> <% for (let j=0;j< result[i].flight_rate  ; j++) { %>
-                            &starf;                            
+                            <span class="star">&starf;</span>                            
                         <%}%></li>
                          
                          <li><b>Comment:</b><p>  <%= result[i].comment %></p></li>
