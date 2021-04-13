@@ -9,19 +9,27 @@
         <%-include('../partials/nav')%>
     </header>
     <main>
+        <section id="community-search-section">
+            <form id="community-search-form" action="/community/search" method="GET" >
+                <input type="text" name="search" placeholder="Enter your search"   required>
+                <button type="submit">Search</button>
+            </form>
+        </section>
         <section id="communitySection">
          
 
                 <% for(let i=0;i<result.length;i++){ %>
                 <% if(i%2===0){ %>
-                    <div>
-                   <ul>
-                        <li><img src="/images/user.png" width="35px"/></li>&NonBreakingSpace; 
+                    <div id="comment-div">
+                   
+                         <li><img src="/images/user.png" width="35px"/></li> 
                          <li> <b><%= result[i].user_name %></b> </li>
-                         <br>
-                         <li><b> Rating: </b><%= result[i].flight_rate %></li>
-                         <br>
-                         <li><b>Comment:</b>  <%= result[i].comment %></li>
+                        
+                         <li> <% for (let j=0;j< result[i].flight_rate  ; j++) { %>
+                            &starf;                            
+                        <%}%></li>
+                         
+                         <li><b>Comment:</b><p>  <%= result[i].comment %></p></li>
                    
                    
             <% }else{%>
@@ -29,13 +37,13 @@
                     <li id="logo"><img src="<%= result[i].logo %>" alt="flight logo" /> </li>
                   
                     <li><%= result[i].airline %></li>
-                    <br>
-                    <li><img src="/images/takeoff-the-plane.png"style="width: 20px;"> <%= result[i].departure %></li>
                     
-                    <li><img src="/images/plane-landing.png" style="width: 20px;"> <%= result[i].arrival %></li>
-                    <br>
-                    <li><%= result[i].flight_date %></li>
-                </ul>
+                    <li><img class="shift-down" src="/images/takeoff-the-plane.png"style="width: 15px;"> <%= result[i].departure %></li>
+                    
+                    <li><img class="shift-down" src="/images/plane-landing.png" style="width: 15px;"> <%= result[i].arrival %></li>
+                    
+                    <!-- <li><%= result[i].flight_date %></li> -->
+                
             </div>
         <% } %>
     

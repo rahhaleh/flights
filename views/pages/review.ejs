@@ -5,21 +5,23 @@
     <%-include('../partials/head')%>
         <title>Document</title>
 </head>
-
+ 
 <body>
     <header>
         <%-include('../partials/nav')%>
     </header>
     <main id="review-main">
         <div id="reviewed-flight-info">
+            <ul>
             <li id="logo"><img src="<%= result.logo %>" alt="flight logo" > </li>
            
-            <p><%= result.airline %> Airline.</p>
-            <p>Flight Number: <%= result.flight_num %></p>           
-            <p>Departure: <img src="/images/takeoff-the-plane.png"style="width: 20px;"> <%= result.departure %> Airport.</p>                
-            <p>Arrival: <img src="/images/plane-landing.png" style="width: 20px;"> <%= result.arrival %> Airport.</p>                               
-            <p>Date:  <%= result.flight_date %>. </p>               
-            <p>Status: <%= result.flight_status %>.</p>                
+            <li><%= result.airline %>.</li>
+            <li> Flight Number: <%= result.flight_num %></li>           
+            <li> Departure: <img class="shift-down" src="/images/takeoff-the-plane.png"style="width: 20px;"> <%= result.departure %> Airport.</li>                
+            <li> Arrival: <img class="shift-down" src="/images/plane-landing.png" style="width: 20px;"> <%= result.arrival %> Airport.</li>                               
+            <li> Date:  <%= result.flight_date %>. </li>               
+            <li> Status: <%= result.flight_status %>.</li> 
+        </ul>               
         </div>
 
         <section id="review-form-section">
