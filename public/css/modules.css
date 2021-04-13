@@ -367,10 +367,11 @@
 @media screen and (max-width: 960px) {
   #review-main {
     display: flex;
-    justify-content: space-evenly;
+    justify-content: space-around;
     flex-flow: column nowrap;
     align-items: center;
     margin-bottom: 20px;
+  padding: 5%;
   }
   #reviewed-flight-info {
     width: 90%;
@@ -391,9 +392,22 @@
     display: inline;
   }
   nav {
-    display: block;
+    position: relative;
+    /* display: block; */
+    justify-content: space-around;
   }
   #navDisplay {
     display: none;
+    position: absolute;
+    top:60px;
   }
+  #review-form{
+width: 90%;
+  }
+  #site-logo {
+    margin-top:0;
+    margin-left: 0;
+    margin-bottom: 0;
+  }
+ 
 }
