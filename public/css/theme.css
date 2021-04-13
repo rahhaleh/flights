@@ -30,10 +30,6 @@ form div{
 form input{
     border: solid 1px var(--color-5);
 }
-form button{
-
-}
-
 /* review page */
 #showSection{
     margin-top: 50px;
@@ -78,5 +74,9 @@ nav ul li{
     color: var(--color-2);
     font-weight: bold;
 }
-
+@media screen and  (max-width:960px ) {
+    #header form div {
+        background-color: transparent;
+      }
+}
 
