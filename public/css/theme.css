@@ -75,5 +75,9 @@ nav ul li{
     color: var(--color-2);
     font-weight: bold;
 }
-
+@media screen and  (max-width:960px ) {
+    #header form div {
+        background-color: transparent;
+      }
+}
 

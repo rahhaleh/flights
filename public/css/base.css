@@ -210,11 +210,7 @@ nav ul li{
     border-radius:5px ;
     cursor: pointer;
 }
-nav p{
-    padding-left: 10px;
-    font-family: cursive;
-    font-size: 25px;
-}
+
 
 footer{
     height: 180px;
