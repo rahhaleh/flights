@@ -5,7 +5,8 @@ DROP TABLE  IF EXISTS flights_info;
 CREATE TABLE IF NOT EXISTS airlines (
     id SERIAL PRIMARY KEY,
     airline varchar(255),
-    rate NUMERIC 
+    rate NUMERIC,
+    logo TEXT
 );
 
 CREATE TABLE IF NOT EXISTS reviews (
@@ -22,7 +23,8 @@ CREATE TABLE IF NOT EXISTS flights_info (
     departure varchar (255),
     arrival varchar (255) ,
     flight_date date ,
-    flight_status varchar(255)
+    flight_status varchar(255),
+    logo TEXT
 );
 
 /*ALTER TABLE flights_info  ADD CONSTRAINT fk_airline FOREIGN KEY (airline) REFERENCES airlines(id);*/

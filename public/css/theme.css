@@ -1,11 +1,11 @@
 @import url('https://fonts.googleapis.com/css2?family=New+Tegomin&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Kiwi+Maru&family=New+Tegomin&display=swap');
 :root{
-    --color-1:#D6F7FF;
-    --color-2:#A43030;
-    --color-3:#000000;
-    --color-4:#FFE6E6;
-    --color-5:#CA4C4C;
+    --color-1:#f4f6f7;
+    --color-2:#0C2D48;
+    --color-3:#16222c;
+    --color-4:#2E8BC0;
+    --color-5:#145DA0;
 }
 *{
     font-family: 'Kiwi Maru', serif;
@@ -16,40 +16,68 @@ body{
     font-family: 'Kiwi Maru', serif;
 }
 nav{
-    background-color: var(--color-2);
-    color: var(--color-4);
+    background-color: transparent;
     font-size: 18px;
 }
 footer{
-    background-color: var(--color-3);
-    color: var(--color-4);
+    background-color: var(--color-2);
+    color: var(--color-1);
 
 }
 form div{
-    background-color:var(--color-5);
+    background-color:#0c2d485d;
 }
 form input{
     border: solid 1px var(--color-5);
 }
-form button{
-
-}
 
 /* review page */
 #showSection{
+    margin-top: 50px;
+    background-color: var(--color-1);
     font-family: 'Kiwi Maru', serif;
     font-size: 18px;
+  
+}
+#showSection div{
+    border: 3px solid var(--color-2);
+    border-radius: 15px; 
+}
+
+#showSection div:hover
+{
+        box-shadow:
+                4px 4px  4px 4px var(--color-2);
+        -webkit-transform: translateX(-5px);
+        transform: translateX(-5px);
+      
 }
 #showSection div ul li:nth-child(1){
-    color:var(--color-1);
-    border-bottom:2px solid var(--color-1);
+   
+    border-bottom:2px solid var(--color-2);
 }
 #showSection div ul li:hover{
     color: var(--color-5);  
 }
+#showSection button:hover{
+    box-shadow: inset 0 0 0 50px var(--color-2);
+    color:var(--color-1)
+}
 #communitySection {
     font-family: 'Kiwi Maru', serif;
-    font-size: 20px;
+    font-size: 16px;
 }
-
+#communitySection div {
+    border: 3px solid var(--color-2);
+    border-radius: 15px;
+}
+nav ul li{
+    color: var(--color-2);
+    font-weight: bold;
+}
+@media screen and  (max-width:960px ) {
+    #header form div {
+        background-color: transparent;
+      }
+}
 

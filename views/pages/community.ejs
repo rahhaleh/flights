@@ -8,25 +8,47 @@
     <header>
         <%-include('../partials/nav')%>
     </header>
-    <main>
+    <main id="community-main">
+        <section id="community-search-section">
+            <form id="community-search-form" action="/community/search" method="GET" >
+                <input type="text" name="search" placeholder="Enter your search"   required>
+                <button type="submit">Search</button>
+            </form>
+        </section>
         <section id="communitySection">
-         <% result.forEach(obj=>{ %>
-            <div>
-            <ul>
-                <li>flight_number: <%= obj.flight_num %></li>
-                <li>airline_name: <%= obj.airline %></li>
-                <li>departure: <%= obj.departure %></li>
-                <li>arrival <%= obj.arrival %></li>
-                <li>flight_date: <%= obj.flight_date %></li>
-                <li>flight_status: <%= obj.flight_status %></li>
-            </ul>
-            <ul>
-                <li>user_name: <%= obj.user_name %></li>
-                <li>comment: <%= obj.comment %></li>
-                <li>flight_rate: <%= obj.flight_rate %></li>
-            </ul>
-        </div>
-        <%})%> 
+         
+            <%if(result.length){%>
+                <% for(let i=0;i<result.length;i++){ %>
+                <% if(i%2===0){ %>
+                    <div id="comment-div">
+                   
+                         <li><img src="/images/user.png" width="35px"/></li> 
+                         <li> <b><%= result[i].user_name %></b> </li>
+                        
+                         <li> <% for (let j=0;j< result[i].flight_rate  ; j++) { %>
+                            <span class="star">&starf;</span>                            
+                        <%}%></li>
+                         
+                         <li><b>Comment:</b><p>  <%= result[i].comment %></p></li>
+                   
+                   
+            <% }else{%>
+              
+                    <li id="logo"><img src="<%= result[i].logo %>" alt="flight logo" /> </li>
+                  
+                    <li><%= result[i].airline %></li>
+                    
+                    <li><img class="shift-down" src="/images/takeoff-the-plane.png"style="width: 15px;"> <%= result[i].departure %></li>
+                    
+                    <li><img class="shift-down" src="/images/plane-landing.png" style="width: 15px;"> <%= result[i].arrival %></li>
+                    
+                    <!-- <li><%= result[i].flight_date %></li> -->
+                
+            </div>
+        <% } %>
+    
+        <% } %>
+        <% }else {%><h2 style="margin: 0 auto;"><%=empty%></h2><%}%>
     </section>
     </main>
     <%-include('../partials/footer')%>
