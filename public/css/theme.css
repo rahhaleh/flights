@@ -20,8 +20,8 @@ nav{
     font-size: 18px;
 }
 footer{
-    background-color: var(--color-3);
-    color: var(--color-4);
+    background-color: var(--color-2);
+    color: var(--color-1);
 
 }
 form div{
@@ -29,9 +29,6 @@ form div{
 }
 form input{
     border: solid 1px var(--color-5);
-}
-form button{
-
 }
 
 /* review page */

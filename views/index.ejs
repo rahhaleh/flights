@@ -29,11 +29,12 @@
         </section>
         <!--NIZAR-->
         <section id="airline-cards">
+            
             <%result.forEach(airlineObj=>{%>
                 <div>
                     <img src="<%=Object.values(airlineObj)[1]%>" alt="<%=Object.keys(airlineObj)[1]%>">
                     <h3><%=Object.keys(airlineObj)[0]%></h3>
-                    <h5><%=Object.values(airlineObj)[0]%><span> &starf;</span></h5>
+                    <h5><%=Object.values(airlineObj)[0]%><span> <span class="star">&starf;</span></span></h5>
                 </div>
                 <%})%>
         </section>
