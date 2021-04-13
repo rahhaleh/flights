@@ -17,7 +17,7 @@
         </section>
         <section id="communitySection">
          
-
+            <%if(result.length){%>
                 <% for(let i=0;i<result.length;i++){ %>
                 <% if(i%2===0){ %>
                     <div id="comment-div">
@@ -48,7 +48,7 @@
         <% } %>
     
         <% } %>
-  
+        <% }else {%><h2 style="margin: 0 auto;"><%=empty%></h2><%}%>
     </section>
     </main>
     <%-include('../partials/footer')%>
