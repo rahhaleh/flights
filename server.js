@@ -47,6 +47,7 @@ this.logo=logo;
 function renderHomePage(request,response){
     let combinedArrOfObj=[];
     let sql;
+    // let ratingPromis;
     sql = `INSERT INTO airlines (airline) SELECT airline FROM flights_info WHERE flights_info.airline NOT in (SELECT airline FROM airlines)`;
     client.query(sql).then(()=>{
         sql = `SELECT DISTINCT airline FROM airlines`;
