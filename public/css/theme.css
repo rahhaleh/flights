@@ -44,7 +44,7 @@ form button{
 }
 #showSection div{
     border: 3px solid var(--color-2);
-    border-radius: 15px;
+    border-radius: 15px; 
 }
 
 #showSection div:hover

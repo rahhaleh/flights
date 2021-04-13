@@ -1,5 +1,3 @@
-
-
 let flightArray=[];
 
 require('dotenv').config();
@@ -26,6 +24,7 @@ app.post('/search',getData);
 app.post('/review', renderReview);
 app.post('/community', saveToDB);
 app.get('/community', renderCommunity);
+app.get('/community/search/',renderCommunity)
 app.get('/about', renderAbout);
 
 
@@ -45,14 +44,16 @@ this.logo=logo;
 // 4- combine the airlinesNamesArr and ratesArr into one array of objects.
 // 5- sort the array of objects and then render the page.
 function renderHomePage(request,response){
+    let ratingPromis;
     let combinedArrOfObj=[];
     let sql;
-    // let ratingPromis;
-    sql = `INSERT INTO airlines (airline) SELECT airline FROM flights_info WHERE flights_info.airline NOT in (SELECT airline FROM airlines)`;
+    sql = `INSERT INTO airlines (airline,logo) SELECT airline,logo FROM flights_info WHERE flights_info.airline NOT in (SELECT airline FROM airlines)`;
     client.query(sql).then(()=>{
-        sql = `SELECT DISTINCT airline FROM airlines`;
+        sql = `SELECT DISTINCT airline,logo FROM airlines`;
         client.query(sql).then(result=>{
+            console.log('result', result.rows);
             let airlinesNamesArr= result.rows.map(obj=>Object.values(obj)[0]);
+            let airlinesLogosArr= result.rows.map(obj=>Object.values(obj)[1]);
             sql = `SELECT AVG(flight_rate) FROM reviews WHERE flight_id in (select id from flights_info where airline = $1)`;
             let ratesArr=[];
             for (let i = 0; i < airlinesNamesArr.length; i++) {
@@ -61,15 +62,20 @@ function renderHomePage(request,response){
                     ratesArr.push(parseFloat(result.rows[0].avg).toFixed(2));
                 });             
             }
-            ratingPromis.then(()=>{
-                for (let j = 0; j < airlinesNamesArr.length; j++) {
-                    combinedArrOfObj[j]={[airlinesNamesArr[j]]:ratesArr[j]};
-                }
-                //sorting the combinedArrOfObj from hieght rate to lowest.
-                combinedArrOfObj.sort((a,b)=>Object.values(b)[0]-Object.values(a)[0]);
+            if(ratingPromis){
+
+                ratingPromis.then(()=>{
+                    for (let j = 0; j < airlinesNamesArr.length; j++) {
+                        combinedArrOfObj[j]={[airlinesNamesArr[j]]:ratesArr[j],logo:airlinesLogosArr[j]};
+                    }
+                    //sorting the combinedArrOfObj from hieght rate to lowest.
+                    combinedArrOfObj.sort((a,b)=>Object.values(b)[0]-Object.values(a)[0]);
+                    response.render('./',{result:combinedArrOfObj});
+                    console.log('combinedArrOfObj', combinedArrOfObj);
+                });
+            }else if(airlinesNamesArr.length===0){
                 response.render('./',{result:combinedArrOfObj});
-                console.log('combinedArrOfObj', combinedArrOfObj);
-            });
+            }
         });
     });
     
@@ -144,9 +150,12 @@ function saveToDB(request, response)
 }
 
 function renderCommunity(request,response){
-
+    console.log(request.query)
+    let waitingPromise;
+    let searchValue=request.query.search;
+    let regex= new RegExp(searchValue);
     console.log('in render community')
-
+    
     let SQL = `SELECT count(id) FROM flights_info`;
     client.query(SQL).then(result=>{
         let numberOfRows = parseInt(result.rows[0].count);
@@ -156,8 +165,16 @@ function renderCommunity(request,response){
         for (let i = 1; i <= numberOfRows; i++) {
                 let values=[i];
                 sql = `SELECT flight_num,airline,departure,arrival,flight_date,flight_status,logo FROM flights_info WHERE id=$1`
-                client.query(sql,values).then(fResult=>{
-                    resultsDataArr.unshift(fResult.rows[0]);
+                client.query(sql,values).then(fResult=>{                   
+                        if(searchValue){
+                            resultsDataArr= fResult.rows.filter(obj=>{  
+                                console.log('+++++++++++++++++++++++++++++',regex.test(obj.airline))                             
+                                return regex.test(obj.airline);                                 
+                            })  
+                            }else{
+                                resultsDataArr.unshift(fResult.rows[0]);
+                            } 
+                    console.log('>>>>>>>>>>>.resultsDataArr', resultsDataArr)
                 });
                 sql =`SELECT user_name , comment ,flight_rate FROM reviews WHERE id=$1`
                 //solve it Nizar
@@ -170,16 +187,23 @@ function renderCommunity(request,response){
                   
                 });
             }
-                waitingPromise.then(()=>{
+                if(waitingPromise){
+                    waitingPromise.then(()=>{
+                        response.render('./pages/community',{result:resultsDataArr});
+                        console.log('resultsDataArr//////////////////////////////////////////////////', resultsDataArr);
+                    });
+                }else if(numberOfRows===0){
                     response.render('./pages/community',{result:resultsDataArr});
-                    console.log('resultsDataArr', resultsDataArr);
-                });
+                }
 
     });
 }
 function renderAbout(req, res)
 {
     res.render('./pages/about-us');
+}
+function searchCommunity(){
+ 
 }
 
 client.connect(()=>{
