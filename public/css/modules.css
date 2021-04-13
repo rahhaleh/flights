@@ -1,3 +1,8 @@
+
+#bruger{
+  display: none;
+}
+
 /* show ejs  */
 #showSection button{
     color: var(--color-2);

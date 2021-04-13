@@ -127,3 +127,23 @@ main{
     border: 1px solid white;
 
 }
+@media screen and  (max-width:960px ) {
+
+#showSection div{
+    display: flex;
+    width:70%;
+    flex-direction: column;
+    margin: 1%;
+    margin-left:10%;
+
+}
+#communitySection div{
+    display: flex;
+    width:90%;
+    flex-direction: column;
+    margin: 1%;
+    margin-left:9%;
+    border: 1px solid white;
+
+}
+}
