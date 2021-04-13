@@ -24,6 +24,7 @@ app.post('/search',getData);
 app.post('/review', renderReview);
 app.post('/community', saveToDB);
 app.get('/community', renderCommunity);
+app.get('/community/search/',renderCommunity)
 app.get('/about', renderAbout);
 
 
@@ -149,9 +150,12 @@ function saveToDB(request, response)
 }
 
 function renderCommunity(request,response){
+    console.log(request.query)
     let waitingPromise;
+    let searchValue=request.query.search;
+    let regex= new RegExp(searchValue);
     console.log('in render community')
-
+    
     let SQL = `SELECT count(id) FROM flights_info`;
     client.query(SQL).then(result=>{
         let numberOfRows = parseInt(result.rows[0].count);
@@ -161,9 +165,15 @@ function renderCommunity(request,response){
         for (let i = 1; i <= numberOfRows; i++) {
                 let values=[i];
                 sql = `SELECT flight_num,airline,departure,arrival,flight_date,flight_status,logo FROM flights_info WHERE id=$1`
-                client.query(sql,values).then(fResult=>{
-                    resultsDataArr.unshift(fResult.rows[0]);
-                    console.log('fResult.rows[0]', fResult.rows[0])
+                client.query(sql,values).then(fResult=>{                   
+                        if(searchValue){
+                            resultsDataArr= fResult.rows.filter(obj=>{  
+                                console.log('+++++++++++++++++++++++++++++',regex.test(obj.airline))                             
+                                return regex.test(obj.airline);                                 
+                            })  
+                            }else{
+                                resultsDataArr.unshift(fResult.rows[0]);
+                            } 
                     console.log('>>>>>>>>>>>.resultsDataArr', resultsDataArr)
                 });
                 sql =`SELECT user_name , comment ,flight_rate FROM reviews WHERE id=$1`
@@ -180,7 +190,7 @@ function renderCommunity(request,response){
                 if(waitingPromise){
                     waitingPromise.then(()=>{
                         response.render('./pages/community',{result:resultsDataArr});
-                        console.log('resultsDataArr', resultsDataArr);
+                        console.log('resultsDataArr//////////////////////////////////////////////////', resultsDataArr);
                     });
                 }else if(numberOfRows===0){
                     response.render('./pages/community',{result:resultsDataArr});
@@ -191,6 +201,9 @@ function renderCommunity(request,response){
 function renderAbout(req, res)
 {
     res.render('./pages/about-us');
+}
+function searchCommunity(){
+ 
 }
 
 client.connect(()=>{
