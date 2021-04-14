@@ -15,13 +15,13 @@
 
             <form action="/search" method="post">
                 <div>
-                    <input type="text" name="airline" placeholder="Airline name" required>
+                    <input type="text" name="airline" type="text" placeholder="Airline name" required >
                     <br>
-                    <input type="text" name="flightnumber" placeholder="Flight number">
+                    <input type="text" name="flightnumber" type="number" placeholder="Flight number" pattern="[0-9]{3,4}" title="Flight number must be a 3 or 4 digits number">
                     <br>
-                    <input type="text" name="departure" placeholder="Departure">
+                    <input type="text" name="departure" type="text" placeholder="Departure">
                     <br>
-                    <input type="text" name="arrival" placeholder="Arrival">
+                    <input type="text" name="arrival" type="text" placeholder="Arrival">
                     <br>  
                     <button type="submit"><img class="shift-down" src="/images/magnifying-glass.png" width="15px">Search</button>  
                 </div>
