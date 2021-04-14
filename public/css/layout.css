@@ -119,7 +119,7 @@ main {
 /* review page */
 #showSection {
   display: flex;
-  flex-direction: row;
+  flex-flow: column wrap;
 }
 #showSection div {
   display: flex;
