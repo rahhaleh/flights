@@ -2,16 +2,17 @@
 <html lang="en">
 <head>
     <%-include('./partials/head')%>
-    <title>Document</title>
+    <title>rahhaleh</title>
 </head>
 <body>
     <header>
         <%-include('./partials/nav')%>
     </header>
     <main>
+        
         <section id="header">
-
             <video width="100%" autoplay muted loop preload="auto" src="/images/header.mp4"></video>
+
 
             <form action="/search" method="post">
                 <div>
@@ -30,9 +31,13 @@
         </section>
         <!--NIZAR-->
         <section id="airline-cards">
-            
+
             <%result.forEach(airlineObj=>{%>
                 <div>
+                    <form action="/community/search" method="GET" >
+                        <input type="text" name="search" hidden value="<%=Object.keys(airlineObj)[0]%>">
+                        <button type="submit"></button>
+                    </form>       
                     <img src="<%=Object.values(airlineObj)[1]%>" alt="<%=Object.keys(airlineObj)[1]%>">
                     <h3><%=Object.keys(airlineObj)[0]%></h3>
                     <h5><%=Object.values(airlineObj)[0]%><span> <span class="star">&starf;</span></span></h5>

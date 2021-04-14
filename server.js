@@ -1,5 +1,5 @@
 let flightArray=[];
-
+let img_color='white';
 require('dotenv').config();
 
 
@@ -89,6 +89,7 @@ function getData(request,response){
     const flightNumber=(request.body.flightnumber)?request.body.flightnumber:' ';
     const key=process.env.FLIGHT_KEY;
     let url=`http://api.aviationstack.com/v1/flights?access_key=${key}&airline_name=${airlineName}`
+    let url_2='https://api.imagga.com/v2/colors?image_url=';
 
     if(request.body.departure && request.body.arrival){
         console.log('inside if');
@@ -109,22 +110,27 @@ function getData(request,response){
         console.log('inside second if');
         url=`${url}&flight_number=${flightNumber}`;
     }
-    url=`${url}&limit=5`;
-    console.log('last url////////////////////////////',url);
+    url=`${url}&limit=50`;
 
     const airlineLogo=require('./data/airlineLogo.json');
     airlineLogo.forEach(element=>{
         if(element.name.toLowerCase()===airlineName){
            logo =element.logo;
+           url_2 += logo;
+           console.log('url_2', url_2)
         }
     })
+    superagent.get(url_2)
+    .auth('acc_9380acc160c6b27','da2618cd1b8f8c95141e98826ec5c499')
+    .then(apiResponse=>{
+        img_color=apiResponse.body.result.colors.background_colors[0].html_code;
+        console.log('img_color', img_color)
+     });
     superagent.get(url).then(apiResponse=>{
-      console.log(apiResponse.body.data);
       flightArray= apiResponse.body.data.map(element=>{
       return new Flight(element,logo);
       })
-
-      response.render('./pages/show',{ searchResults: flightArray });
+      response.render('./pages/show',{ searchResults: flightArray ,color:img_color});
   }).catch((err)=> {
     console.log(err);
   });
@@ -150,19 +156,15 @@ function saveToDB(request, response)
 }
 
 function renderCommunity(request,response){
-    console.log(request.query)
     let waitingPromise;
     let searchValue=request.query.search;
-    console.log('searchValue', searchValue);
     let regex= new RegExp(searchValue,'i');
     let searchAirlineFound=false;
     let matchedCommentFound = false;
-    console.log('in render community')
     
     let SQL = `SELECT count(id) FROM flights_info`;
     client.query(SQL).then(result=>{
         let numberOfRows = parseInt(result.rows[0].count);
-        console.log('numberOfRows', numberOfRows);
         let resultsDataArr=[];
         let temporaryArr=[];
         let sql;
