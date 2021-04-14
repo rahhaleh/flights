@@ -13,7 +13,6 @@
         <section id="header">
             <video width="100%" autoplay muted loop preload="auto" src="/images/header.mp4"></video>
 
-
             <form action="/search" method="post">
                 <div>
                     <input type="text" name="airline" placeholder="Airline name" required>
@@ -33,15 +32,17 @@
         <section id="airline-cards">
 
             <%result.forEach(airlineObj=>{%>
+                <a href="/community/search?search=<%=Object.keys(airlineObj)[0]%>">
                 <div>
-                    <form action="/community/search" method="GET" >
+<!--                     <form action="/community/search" method="GET" >
                         <input type="text" name="search" hidden value="<%=Object.keys(airlineObj)[0]%>">
                         <button type="submit"></button>
-                    </form>       
+                    </form>   -->     
                     <img src="<%=Object.values(airlineObj)[1]%>" alt="<%=Object.keys(airlineObj)[1]%>">
                     <h3><%=Object.keys(airlineObj)[0]%></h3>
                     <h5><%=Object.values(airlineObj)[0]%><span> <span class="star">&starf;</span></span></h5>
                 </div>
+            </a>
                 <%})%>
         </section>
         <!--NIZAR-->

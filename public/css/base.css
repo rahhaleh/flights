@@ -5,7 +5,9 @@ cursor: auto;}
 a:visited{ 	
 text-decoration: none;
 cursor: auto; }	
-
+a{
+    cursor: pointer;
+}
 address,article,aside,blockquote,body,dd,details,div,dl,dt,fieldset,figcaption,figure,footer,form,h1,h2,h3,h4,h5,h6,header,hr,html,iframe[seamless],legend,menu,nav,ol,p,pre,section,summary,ul{
     display: block;
 }

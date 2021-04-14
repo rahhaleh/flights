@@ -125,7 +125,9 @@ function getData(request,response){
     .then(apiResponse=>{
         img_color=apiResponse.body.result.colors.background_colors[0].html_code;
         console.log('img_color', img_color)
-     });
+     }).catch((err)=> {
+        console.log(err);
+      });
     superagent.get(url).then(apiResponse=>{
       flightArray= apiResponse.body.data.map(element=>{
       return new Flight(element,logo);

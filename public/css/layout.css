@@ -81,7 +81,7 @@ main {
   padding: 50px 0;
 }
  
-#airline-cards div {
+#airline-cards a {
   border: var(--color-2) 2px solid;
   text-align: center;
   line-height: 50px;
@@ -90,11 +90,15 @@ main {
   margin: 20px 20px;
   border-radius: 15px;
   position: relative;
+  cursor: pointer;
 }
-#airline-cards div img{
+#airline-cards a,#airline-cards a:hover,#airline-cards a:visited,#airline-cards a:active{
+  color: inherit;
+}
+#airline-cards a img{
  margin-top: 10px;
 }
-#airline-cards div:hover
+#airline-cards a:hover
 {
         box-shadow:
                 4px 4px  4px 4px var(--color-2);
@@ -102,7 +106,7 @@ main {
         transform: translateX(-5px);
 }
 
-#airline-cards div span {
+#airline-cards a span {
   font-size: 20px;
 }
 #airline-cards form button{
