@@ -1,7 +1,7 @@
 #burgerButton {
   display: none;
+  cursor: pointer;
 }
-
 /* show ejs  */
 #showSection button {
   color: var(--color-2);
@@ -26,6 +26,10 @@
 #communitySection div ul {
   display: grid;
 }
+#community-search-form input {
+  width: 200px;
+}
+
 /* review ejs  */
 #review-main {
   display: flex;
@@ -33,17 +37,85 @@
   flex-flow: row nowrap;
   align-items: center;
   margin-bottom: 20px;
+}.star-rating {
+  font-size: 0;
+  white-space: nowrap;
+  display: inline-block;
+  width: 250px;
+  height: 50px;
+  overflow: hidden;
+  position: relative;
+  background: url('data:image/svg+xml;base64,PHN2ZyB2ZXJzaW9uPSIxLjEiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyIgeG1sbnM6eGxpbms9Imh0dHA6Ly93d3cudzMub3JnLzE5OTkveGxpbmsiIHg9IjBweCIgeT0iMHB4IiB3aWR0aD0iMjBweCIgaGVpZ2h0PSIyMHB4IiB2aWV3Qm94PSIwIDAgMjAgMjAiIGVuYWJsZS1iYWNrZ3JvdW5kPSJuZXcgMCAwIDIwIDIwIiB4bWw6c3BhY2U9InByZXNlcnZlIj48cG9seWdvbiBmaWxsPSIjREREREREIiBwb2ludHM9IjEwLDAgMTMuMDksNi41ODMgMjAsNy42MzkgMTUsMTIuNzY0IDE2LjE4LDIwIDEwLDE2LjU4MyAzLjgyLDIwIDUsMTIuNzY0IDAsNy42MzkgNi45MSw2LjU4MyAiLz48L3N2Zz4=');
+  background-size: contain;
 }
+.star-rating i {
+  opacity: 0;
+  position: absolute;
+  left: 0;
+  top: 0;
+  height: 100%;
+  width: 20%;
+  z-index: 1;
+  background: url('data:image/svg+xml;base64,PHN2ZyB2ZXJzaW9uPSIxLjEiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyIgeG1sbnM6eGxpbms9Imh0dHA6Ly93d3cudzMub3JnLzE5OTkveGxpbmsiIHg9IjBweCIgeT0iMHB4IiB3aWR0aD0iMjBweCIgaGVpZ2h0PSIyMHB4IiB2aWV3Qm94PSIwIDAgMjAgMjAiIGVuYWJsZS1iYWNrZ3JvdW5kPSJuZXcgMCAwIDIwIDIwIiB4bWw6c3BhY2U9InByZXNlcnZlIj48cG9seWdvbiBmaWxsPSIjRkZERjg4IiBwb2ludHM9IjEwLDAgMTMuMDksNi41ODMgMjAsNy42MzkgMTUsMTIuNzY0IDE2LjE4LDIwIDEwLDE2LjU4MyAzLjgyLDIwIDUsMTIuNzY0IDAsNy42MzkgNi45MSw2LjU4MyAiLz48L3N2Zz4=');
+  background-size: contain;
+}
+.star-rating input {
+  -moz-appearance: none;
+  -webkit-appearance: none;
+  opacity: 0;
+  display: inline-block;
+  width: 20%;
+  height: 100%;
+  margin: 0;
+  padding: 0;
+  z-index: 2;
+  position: relative;
+}
+.star-rating input:hover + i,
+.star-rating input:checked + i {
+  opacity: 1;
+}
+.star-rating i ~ i {
+  width: 40%;
+}
+.star-rating i ~ i ~ i {
+  width: 60%;
+}
+.star-rating i ~ i ~ i ~ i {
+  width: 80%;
+}
+.star-rating i ~ i ~ i ~ i ~ i {
+  width: 100%;
+}
+::after,
+::before {
+  height: 100%;
+  padding: 0;
+  margin: 0;
+  box-sizing: border-box;
+  text-align: center;
+  vertical-align: middle;
+}
+
+.star-rating.star-5 {width: 250px;}
+.star-rating.star-5 input,
+.star-rating.star-5 i {width: 20%;}
+.star-rating.star-5 i ~ i {width: 40%;}
+.star-rating.star-5 i ~ i ~ i {width: 60%;}
+.star-rating.star-5 i ~ i ~ i ~ i {width: 80%;}
+.star-rating.star-5 i ~ i ~ i ~ i ~i {width: 100%;}
+
+
 #reviewed-flight-info {
   border: 3px solid var(--color-2);
   width: 50%;
   margin-bottom: 75px;
   color: black;
-  margin-top: 15px;
   border-radius: 15px;
   display: flex;
   flex-direction: column;
   font-size: 18px;
+  padding: 10px;
 }
 #reviewed-flight-info:hover {
   box-shadow: 4px 4px 4px 4px var(--color-2);
@@ -64,6 +136,7 @@
   flex-flow: column nowrap;
   justify-content: center;
   align-items: center;
+  margin-top: 25px;
 }
 #review-form input[type="text"] {
   width: 300px;
@@ -97,9 +170,6 @@
   box-shadow: inset 0 100px 0 0 var(--color-2);
   color: var(--color-1);
 }
-.radio:active {
-  color: var(--color-2);
-}
 /*--------------------------------------------------------------------------------------*/
 * {
   box-sizing: border-box;
@@ -110,7 +180,125 @@ padding: 5%;
 
 @import url("https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.0-2/css/all.min.css");
 
-@media screen and (max-width: 468px) {
+@media screen and (max-width: 600px) {
+
+  footer p{ 
+    display: none;
+ }
+ footer{
+   font-size: 12px;
+ }
+  #showSection div {
+    display: flex;
+    width: 80%;
+    flex-direction: column;
+    padding: 0 10px;
+  }
+  video {
+    display: none;
+  }
+nav{
+  margin-bottom: 50px;
+}
+  #header form div {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    position: static;
+    height: min-content;
+    width: min-content;
+    border-radius: 10px;
+  }
+  #header form input{
+    margin: 5px 0;
+  }
+  #header{
+    height: 100%;
+  }
+  #header form button {
+    margin-top: 20px;
+    position: static;
+    width: 100px;
+    padding: 5px 8px;
+  }
+  #airline-cards {
+    margin-top: 100px;
+  }
+  #communitySection div {
+   min-height: 200px;
+   max-height:max-content;
+    width: 80%;
+  }
+  #communitySection div {
+    display: grid;
+    grid-template-columns: 1fr 2fr 1fr;
+    grid-template-rows: 1fr 1fr 1fr 1fr 1fr;
+    gap: 0px 0px;
+    grid-template-areas:
+      ". . . "
+      ". . . "
+      ". . . "
+      ". . . "
+      ". . . ";
+   
+  }
+
+  #communitySection div li:nth-child(2) {
+    justify-self: start;
+  }
+  #communitySection div li:nth-child(3) {
+    grid-column-start: 2;
+    grid-column-end: 4;
+    grid-row-start: 2;
+    grid-row-end: 3;
+    align-self: end;
+    justify-self:start ;
+    transform: translateX(-5px);
+   
+  }
+  #communitySection div li:nth-child(4) {
+    grid-column-start: 1;
+/*     grid-column-end: 4; */
+    grid-row-start: 4;
+    grid-row-end: 6;
+  }
+  #communitySection div li:nth-child(4) p {
+   width: 85%;
+   height: min-content;
+    margin-right: 10px;
+    padding-bottom: 20px;
+    /* background-color: blue; */
+  }
+  #communitySection div li:nth-child(5) {
+    grid-column-start: 3;
+    grid-column-end: 4;
+    grid-row-start: 2;
+    grid-row-end: 3;
+  }
+  #communitySection div li:nth-child(6) {
+    grid-column-start: 1;
+    grid-column-end: 3;
+    grid-row-start: 2;
+    grid-row-end: 3;
+  }
+  #communitySection div li:nth-child(7) {
+    grid-column-start: 1;
+    grid-column-end: 4;
+    grid-row-start: 3;
+    grid-row-end: 4;
+  align-self: center;
+  }
+  #communitySection div li:nth-child(8) {
+    grid-column-start: 1;
+    grid-column-end: 4;
+    grid-row-start: 3;
+    grid-row-end: 4;
+align-self: end;  }
+
+
+/*----------------------------About Us Page-----------------------------*/
+
   .hvr-bob {
 
         border: rgba(13, 36, 100, 0.349) 1px solid;
@@ -121,7 +309,9 @@ padding: 5%;
         justify-self: center;
 
     }
-
+#reviewed-flight-info{
+  padding: 0 10px;
+}
   #a {
     grid-area: a;
   }
@@ -188,7 +378,7 @@ padding: 5%;
 
 
 
-@media screen and  (max-width:960px ) and (min-width:469px )
+@media screen and (min-width:601px ) and  (max-width:960px ) 
 {
   .hvr-bob {
         border: rgb(4, 48, 114) 1px solid;
@@ -228,8 +418,6 @@ padding: 5%;
   }
   #a {
     padding-left: 40px;
-
-    color: rgb(4, 48, 114);
 }
 .personImage{
 
@@ -260,12 +448,12 @@ padding: 5%;
   grid-column-end: 1;
 }
 }
-@media screen and  (min-width:960px ) 
+@media screen and  (min-width:961px ) 
 {
     
     .hvr-bob {
         border: rgb(25, 53, 77) 1px solid;
-        background-color: rgb(238, 244, 253) ;
+        background-color: white ;
         margin: 20px;
         border-radius: 15px;
         text-align: center;
@@ -388,7 +576,7 @@ padding: 5%;
   text-shadow: 0 0 0 rgb(255,215,0);
   -webkit-text-stroke-width: 1px;
   -webkit-text-stroke-color: black;
-
+}
 @media screen and (max-width: 960px) {
   #review-main {
     display: flex;
@@ -406,12 +594,11 @@ padding: 5%;
   }
   #showSection button {
     border: 1px solid var(--color-2);
-    padding: 8px 15px;
+    padding: 8px 10px;
     border-radius: 10px;
-    width: 165px;
-    margin-top: 10px;
-    margin-left: 30%;
+    width: 150px;
     margin-bottom: 2%;
+    margin-left: 0  ;
   }
   #burgerButton {
     display: inline;
@@ -424,7 +611,17 @@ padding: 5%;
   #navDisplay {
     display: none;
     position: absolute;
-    top:60px;
+    top:56px;
+    background-color: var(--color-1);
+    z-index: 2;
+    width: 100%;
+    height: 100vh;
+    text-align: center;
+    padding-top: 50px;
+
+  }
+  #navDisplay li{
+    margin-bottom: 40px;
   }
   #review-form{
 width: 90%;

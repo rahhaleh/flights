@@ -16,7 +16,7 @@ body{
     font-family: 'Kiwi Maru', serif;
 }
 nav{
-    background-color: transparent;
+    background-color: rgba(182, 213, 241, 0.356);
     font-size: 18px;
 }
 footer{
@@ -42,6 +42,7 @@ form input{
 #showSection div{
     border: 3px solid var(--color-2);
     border-radius: 15px; 
+    padding: 10px;
 }
 
 #showSection div:hover
@@ -80,4 +81,3 @@ nav ul li{
         background-color: transparent;
       }
 }
-

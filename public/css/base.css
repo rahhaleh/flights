@@ -5,10 +5,6 @@ cursor: auto;}
 a:visited{ 	
 text-decoration: none;
 cursor: auto; }	
-a:link:active{ 	
-}
-a:visited:active{ 	
-}
 
 address,article,aside,blockquote,body,dd,details,div,dl,dt,fieldset,figcaption,figure,footer,form,h1,h2,h3,h4,h5,h6,header,hr,html,iframe[seamless],legend,menu,nav,ol,p,pre,section,summary,ul{
     display: block;
@@ -184,12 +180,12 @@ margin-top: 1em;
 margin-bottom: 1 em;
 margin-left: 0;
 margin-right: 0;
-padding-left: 40px;} 	
+padding-left: 0px;} 	
 var {font-style: italic;} 	
 
 /*-------------------------------------------------------------------------------*/
 nav{
-    border-bottom:2px solid #ffffff;
+    border-bottom:2px solid var(--color-2);
 }
 
 nav, nav ul{
@@ -213,15 +209,17 @@ nav ul li{
 
 
 footer{
-    height: 180px;
+    height: 200px;
     display: flex;
     flex-direction: row;
     align-items: flex-start;
-    justify-content: space-evenly;
+    justify-content: space-around;
     color: white;
     flex-flow: row nowrap;
     width: 100%;
+    margin-top: 10%;
 }
+
 footer ul, #footer-p{
     color: wheat;
 }
@@ -235,13 +233,4 @@ footer a{
 }
 video{
     z-index: -1;
-}
-@media screen and (max-width: 960px){
-   footer p{
-       
-       display: none;
-    }
-    /* footer{
-        flex-flow: column nowrap;
-    } */
 }

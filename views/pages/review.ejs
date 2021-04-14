@@ -3,7 +3,7 @@
 
 <head>
     <%-include('../partials/head')%>
-        <title>Document</title>
+        <title>review</title>
 </head>
  
 <body>
@@ -30,13 +30,13 @@
               
                     <input type="text" name="userName" id="" placeholder="Your Username" required>
                     <textarea name="userReview" id="" cols="30" rows="10" placeholder="Add your review here" required></textarea>
-                    <label for="">Rating:
-                        <input class="radio" type="radio" value="5" name="rate"> 5 </input>
-                        <input class="radio" type="radio" value="4" name="rate"> 4 </input>
-                        <input class="radio" type="radio" value="3" name="rate"> 3 </input>
-                        <input class="radio" type="radio" value="2" name="rate"> 2 </input>
-                        <input class="radio" type="radio" value="1" name="rate"> 1 </input>
-                    </label>
+                        <span class="star-rating.star-5 star-rating">
+                            <input class="radio" type="radio" value="1" name="rate" required><i></i>
+                            <input class="radio" type="radio" value="2" name="rate" required><i></i>
+                            <input class="radio" type="radio" value="3" name="rate" required><i></i>
+                            <input class="radio" type="radio" value="4" name="rate" required><i></i>
+                            <input class="radio" type="radio" value="5" name="rate" required><i></i>
+                        </span>
                     <button type="submit">Post Review</button>
                
             </form>

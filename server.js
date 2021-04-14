@@ -109,7 +109,7 @@ function getData(request,response){
         console.log('inside second if');
         url=`${url}&flight_number=${flightNumber}`;
     }
-    url=`${url}&limit=5`;
+    url=`${url}&limit=50`;
     console.log('last url////////////////////////////',url);
 
     const airlineLogo=require('./data/airlineLogo.json');
