@@ -12,7 +12,7 @@
     </header>
     <main>
         <section id="showSection">
-            <% if(searchResults) { %>
+            <% if(searchResults.length) { %>
                 <% searchResults.forEach(flight=>{ %>
                     <div style="border-color:<%=color%>;">
                         <ul>
@@ -35,21 +35,23 @@
                                 <%= flight.flight %>
                             </li>
                         </ul>
-                        <form action="/review" method="POST">
-                            <input type="hidden" value=" <%= flight.logo %>" name="logo" >
-                            <input type="hidden" value=" <%= flight.flight %>" name="flight_num" > 
-                            <input type="hidden" value=" <%= flight.airline %>" name="airline" > 
-                            <input type="hidden" value="<%= flight.departure %>" name="departure" > 
-                            <input type="hidden" value="<%= flight.arrival %>" name="arrival" > 
-                            <input type="hidden" value="<%= flight.flight_date %>" name="flight_date" > 
-                            <input type="hidden" value="<%= flight.flight_status %>" name="flight_status" > 
-                            <br>
-                            <button type="submit">Review</button>
-                        </form>
+                        <% if(flight.flight_status==='landed'){ %>
+                            <form action="/review" method="POST">
+                                <input type="hidden" value=" <%= flight.logo %>" name="logo" >
+                                <input type="hidden" value=" <%= flight.flight %>" name="flight_num" > 
+                                <input type="hidden" value=" <%= flight.airline %>" name="airline" > 
+                                <input type="hidden" value="<%= flight.departure %>" name="departure" > 
+                                <input type="hidden" value="<%= flight.arrival %>" name="arrival" > 
+                                <input type="hidden" value="<%= flight.flight_date %>" name="flight_date" > 
+                                <input type="hidden" value="<%= flight.flight_status %>" name="flight_status" > 
+                                <br>
+                                    <button type="submit">Review</button>
+                            </form>
+                            <% } %>
                     </div>
                    
                     <% }) %>
-                        <% } %>
+                        <% }else{%><h2 style="margin: 0 auto;"><%=empty%></h2><%}%>
                     </section>
     
         

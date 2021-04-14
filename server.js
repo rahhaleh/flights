@@ -1,5 +1,5 @@
 let flightArray=[];
-let img_color='white';
+let img_color='black';
 require('dotenv').config();
 
 
@@ -27,6 +27,7 @@ app.get('/community', renderCommunity);
 app.get('/community/search/',renderCommunity)
 app.get('/about', renderAbout);
 
+app.get('*',(req,res)=>res.render('pages/error'));
 
 function Flight(data,logo){
 this.flight_date=(data.flight_date)?data.flight_date:'no available flight date';
@@ -51,7 +52,6 @@ function renderHomePage(request,response){
     client.query(sql).then(()=>{
         sql = `SELECT DISTINCT airline,logo FROM airlines`;
         client.query(sql).then(result=>{
-            console.log('result', result.rows);
             let airlinesNamesArr= result.rows.map(obj=>Object.values(obj)[0]);
             let airlinesLogosArr= result.rows.map(obj=>Object.values(obj)[1]);
             sql = `SELECT AVG(flight_rate) FROM reviews WHERE flight_id in (select id from flights_info where airline = $1)`;
@@ -71,7 +71,6 @@ function renderHomePage(request,response){
                     //sorting the combinedArrOfObj from hieght rate to lowest.
                     combinedArrOfObj.sort((a,b)=>Object.values(b)[0]-Object.values(a)[0]);
                     response.render('./',{result:combinedArrOfObj});
-                    console.log('combinedArrOfObj', combinedArrOfObj);
                 });
             }else if(airlinesNamesArr.length===0){
                 response.render('./',{result:combinedArrOfObj});
@@ -92,22 +91,23 @@ function getData(request,response){
     let url_2='https://api.imagga.com/v2/colors?image_url=';
 
     if(request.body.departure && request.body.arrival){
-        console.log('inside if');
         const iata=require('./data/iata.json');
         iata.forEach(element => {
-            if(element.city===request.body.departure ||element.state===request.body.departure ){
-                departure  =  element.code;
-                console.log('departure',departure);
-            }
-            if(element.city===request.body.arrival||element.state===request.body.arrival){
-                arrival  =  element.code;
-                console.log('arrival',arrival);
+            if(element.city && element.state){
+
+                if(element.city.toLowerCase()===request.body.departure.toLowerCase() ||element.state.toLowerCase()===request.body.departure.toLowerCase() ){
+                    departure  =  element.code;
+                    console.log('departure',departure);
+                }
+                if(element.city.toLowerCase()===request.body.arrival.toLowerCase()||element.state.toLowerCase()===request.body.arrival.toLowerCase()){
+                    arrival  =  element.code;
+                    console.log('arrival',arrival);
+                }
             }
         });      
         url=`${url}&dep_iata=${departure}&arr_iata=${arrival}`;
     }
     if(request.body.flightnumber){
-        console.log('inside second if');
         url=`${url}&flight_number=${flightNumber}`;
     }
     url=`${url}&limit=50`;
@@ -117,42 +117,54 @@ function getData(request,response){
         if(element.name.toLowerCase()===airlineName){
            logo =element.logo;
            url_2 += logo;
-           console.log('url_2', url_2)
         }
-    })
-    superagent.get(url_2)
-    .auth('acc_9380acc160c6b27','da2618cd1b8f8c95141e98826ec5c499')
-    .then(apiResponse=>{
-        img_color=apiResponse.body.result.colors.background_colors[0].html_code;
-        console.log('img_color', img_color)
-     }).catch((err)=> {
-        console.log(err);
-      });
+    });
+    if(logo){
+            superagent.get(url_2)
+        .auth(process.env.IMAGGA_KEY,process.env.IMAGGA_SECRET)
+        .then(apiResponse=>{
+            img_color=apiResponse.body.result.colors.background_colors[0].html_code;
+            console.log('img_color', img_color);
+        }).catch((err)=> {
+            console.log('error from IMAGGA API','with request:',url_2,'error message:',err);
+        });
+    }
     superagent.get(url).then(apiResponse=>{
       flightArray= apiResponse.body.data.map(element=>{
       return new Flight(element,logo);
       })
-      response.render('./pages/show',{ searchResults: flightArray ,color:img_color});
+      response.render('./pages/show',{ searchResults: flightArray ,color:img_color,empty:'Sorry, No result for the entered data'});
+      console.log('flightArray', flightArray)
+      img_color='black';
   }).catch((err)=> {
-    console.log(err);
+    console.log('error from aviationstack API',err);
   });
  
 }
+let holderOfFlightsInfoArr=[];
 function renderReview(request, response){
-    let data =request.body;
-    let SQL = `INSERT INTO flights_info (flight_num,airline,departure,arrival,flight_date,flight_status,logo) VALUES($1,$2,$3,$4,$5,$6,$7) RETURNING *`
-    let values=[data.flight_num, data.airline, data.departure, data.arrival, data.flight_date, data.flight_status,data.logo];
-    let resDBPromis=client.query(SQL,values);
-    response.render('./pages/review',{result : request.body} );
+    let data = holderOfFlightsInfoArr = request.body;
+    response.render('./pages/review',{result : data} );
 }
+
+//called after posting a review.
 function saveToDB(request, response)
 {
-    let SQL = 'select max(id) from flights_info';
-    client.query(SQL).then(result=>{
-        let sql = 'INSERT INTO reviews (flight_id, user_name , comment ,flight_rate)Values($1,$2,$3,$4) RETURNING *'
-        let values = [result.rows[0].max,request.body.userName , request.body.userReview ,request.body.rate]
-        client.query(sql,values).then(result=>{
-            response.redirect('/community');
+    let data =holderOfFlightsInfoArr;
+    let SQL = `INSERT INTO flights_info (flight_num,airline,departure,arrival,flight_date,flight_status,logo) VALUES($1,$2,$3,$4,$5,$6,$7) RETURNING *`
+    let values=[data.flight_num, data.airline, data.departure, data.arrival, data.flight_date, data.flight_status,data.logo];
+    client.query(SQL,values).then(()=>{
+
+        let SQL = 'select max(id) from flights_info';
+        client.query(SQL).then(result=>{
+
+            let sql = 'INSERT INTO reviews (flight_id, user_name , comment ,flight_rate)Values($1,$2,$3,$4) RETURNING *'
+            let values = [result.rows[0].max,request.body.userName , request.body.userReview ,request.body.rate]
+            client.query(sql,values).then(()=>{
+
+                response.redirect('/community');
+                holderOfFlightsInfoArr=[];
+            });
         });
     });
 }
@@ -179,7 +191,6 @@ function renderCommunity(request,response){
                             if(searchValue){
                                 temporaryArr=[];
                                 temporaryArr= fResult.rows.filter(obj=>{  
-                                    console.log('regex test',regex.test(obj.airline))                             
                                     searchAirlineFound = regex.test(obj.airline);   
                                     matchedCommentFound=false;
                                     return searchAirlineFound;                              
@@ -191,16 +202,12 @@ function renderCommunity(request,response){
                                 resultsDataArr.unshift(fResult.rows[0]);
                             } 
                         }
-                    console.log('resultsDataArr UP', resultsDataArr)
                 });
                 sql =`SELECT user_name , comment ,flight_rate FROM reviews WHERE id=$1`
-                //solve it Nizar
                 waitingPromise = client.query(sql,values).then(rResult=>{
                     if(!searchValue){
                         if(rResult.rows[0]){
                             resultsDataArr.unshift(rResult.rows[0]);
-                        }else{
-                            resultsDataArr.shift();
                         }
                     }else if(searchAirlineFound && !matchedCommentFound){ 
                         resultsDataArr.unshift(rResult.rows[0]);
@@ -211,10 +218,9 @@ function renderCommunity(request,response){
                 if(waitingPromise){
                     waitingPromise.then(()=>{
                         response.render('./pages/community',{result:resultsDataArr,empty:'Sorry, no matched results'});
-                        console.log('resultsDataArr DOWN', resultsDataArr);
                     });
                 }else if(numberOfRows===0){
-                    response.render('./pages/community',{result:resultsDataArr,empty:'it seems to be empty here! \n try to review your flight'});
+                    response.render('./pages/community',{result:resultsDataArr,empty:'it seems to be empty here! \n try to review a flight'});
                 }
 
     });
