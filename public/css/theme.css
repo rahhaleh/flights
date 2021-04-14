@@ -6,6 +6,7 @@
     --color-3:#16222c;
     --color-4:#2E8BC0;
     --color-5:#145DA0;
+    --color-6:white;
 }
 *{
     font-family: 'Kiwi Maru', serif;
@@ -16,12 +17,11 @@ body{
     font-family: 'Kiwi Maru', serif;
 }
 nav{
-    background-color: rgba(182, 213, 241, 0.356);
+    background-color: #0c2d48;
     font-size: 18px;
 }
 footer{
     background-color: var(--color-2);
-    color: var(--color-1);
 
 }
 form div{
@@ -73,7 +73,6 @@ form input{
     border-radius: 15px;
 }
 nav ul li{
-    color: var(--color-2);
     font-weight: bold;
 }
 @media screen and  (max-width:960px ) {

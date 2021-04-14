@@ -14,7 +14,7 @@
         <section id="showSection">
             <% if(searchResults) { %>
                 <% searchResults.forEach(flight=>{ %>
-                    <div>
+                    <div style="border-color:<%=color%> ;">
                         <ul>
                            <li id="logo"><img src="<%= flight.logo %>" alt="flight logo" > </li>
                             <li> 
@@ -43,7 +43,8 @@
                             <input type="hidden" value="<%= flight.arrival %>" name="arrival" > 
                             <input type="hidden" value="<%= flight.flight_date %>" name="flight_date" > 
                             <input type="hidden" value="<%= flight.flight_status %>" name="flight_status" > 
-                            <button type="submit">review</button>
+                            <br>
+                            <button type="submit">Review</button>
                         </form>
                     </div>
                    
