@@ -212,6 +212,14 @@ nav{
   }
   #header{
     height: 100%;
+    background-image: url(/images/header-mobile.jpg);
+    width: 100%;
+  }
+  nav{
+    margin-bottom: 0;
+  }
+  #airline-cards{
+    margin-top: 0 !important;
   }
   #header form button {
     margin-top: 20px;
